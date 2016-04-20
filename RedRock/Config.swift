@@ -116,16 +116,12 @@ class Config {
 
     // MARK: Settings Historic
     
-    static let visualizationTypesHistoric: [VisTypes] = [.CirclePacking, .StackedBar, .TreeMap, .TimeMap, .ForceGraph]
-    static let visualizationButtonsHistoric         = ["RR2.0_Bubble_Blue", "RR2.0_Bar_Blue","RR2.0_Tree_Blue", "RR2.0_Map_Blue", "RR2.0_Network_Blue"]
-    static let visualizationButtonsSelectedHistoric = ["RR2.0_Bubble_WHITE", "RR2.0_Bar_WHITE", "RR2.0_Tree_WHITE", "RR2.0_Map_WHITE", "RR2.0_Network_WHITE"]
-    static let visualizationTitlesHistoric          = ["Bubble Chart - Relationships", "Bar Chart - Sentiment", "Treemap - Tweeter Careers", "World Map - Frequency","Network Graph - Related Words"]
+    static let visualizationTypesHistoric: [VisTypes] = [.ForceGraph]
+    static let visualizationButtonsHistoric         = ["RR2.0_Network_Blue"]
+    static let visualizationButtonsSelectedHistoric = ["RR2.0_Network_WHITE"]
+    static let visualizationTitlesHistoric          = ["Network Graph - Related Words"]
     
     static let visualizationDescriptionHistoric = [
-        "Shows relationships between different elements. Size indicates number of occurances and colored grouping represent different categories.",
-        "Shows the overal positive and negative sentiment for the given search.",
-        "Display the number of top users grouped according to profession.",
-        "Represents the volume of related tweets by location over time.",
         "Shows the closest words to the searched term, and the size of the circle represents its frequency."
     ]
     
