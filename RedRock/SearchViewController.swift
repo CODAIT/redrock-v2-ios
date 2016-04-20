@@ -170,7 +170,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     override func viewWillAppear(animated: Bool) {
         self.resetViewController()
         
-        liveButton.setTitle("Live \(Config.liveSearches[Config.liveCurrentSearchIndex])", forState: UIControlState.Normal)
+//        liveButton.setTitle("Live \(Config.liveSearches[Config.liveCurrentSearchIndex])", forState: UIControlState.Normal)
         
         setLoginText()
     }
