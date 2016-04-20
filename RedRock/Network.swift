@@ -131,6 +131,21 @@ class Network
         executeRequest(req, callBack: callBack)
     }
     
+    func findSynonyms(searchText: String) {
+        if Config.useDummyData {
+            var path = "response_spark"
+            if searchText.containsString("#") {
+                path = "response_spark2"
+            }
+            dispatchRequestForResource(path, callBack: self.callWordDistanceDelegate)
+            return
+        }
+        
+        var parameters = Dictionary<String,String>()
+        parameters["search"] = searchText.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+        let req = self.createRequest(Config.serverLogin, paremeters: parameters)
+        executeRequest(req, callBack: self.callWordDistanceDelegate)
+    }
     
     func dispatchRequestForResource(path: String, callBack: (json: JSON?, error: NSError?) -> ())
     {

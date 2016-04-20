@@ -474,6 +474,9 @@ class CenterViewController: UIViewController, MKMapViewDelegate, UIScrollViewDel
     
     func loadDataFromServer()
     {
+        let networkConnection = Network.sharedInstance
+        networkConnection.delegate = self
+        
         if (Config.useDummyData) {
             let delay = Config.dummyDataDelay * Double(NSEC_PER_SEC)
             let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
@@ -481,8 +484,6 @@ class CenterViewController: UIViewController, MKMapViewDelegate, UIScrollViewDel
                 self.onDummyRequestSuccess(nil)
             }
         } else {
-            let networkConnection = Network.sharedInstance
-            networkConnection.delegate = self
             networkConnection.searchRequest(self.searchText!)
         }
     }

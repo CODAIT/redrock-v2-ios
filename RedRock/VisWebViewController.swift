@@ -58,12 +58,37 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
     func userContentController(userContentController: WKUserContentController, didReceiveScriptMessage message: WKScriptMessage) {
         if(message.name == "callbackHandler") {
             Log("JavaScript is sending a message \(message.body)")
+    
+            let body = message.body as! NSDictionary
+            if let action = body.valueForKey("action") {
+                switch action as! String {
+                case "reload":
+                    self.clean()
+                    reloadChart(body)
+                default:
+                    Log("Unknown action [\(action)] sent from web view")
+                }
+            } else {
+                // let rawData = (message.body as! String)
+                // displayVisOverSentiment(transformDataForDisplayVisOverSentiment(rawData), sentimentIsPositiveMa: isSentimentPositive(rawData));
+            }
             
-            let rawData = (message.body as! String)
-            
-            displayVisOverSentiment(transformDataForDisplayVisOverSentiment(rawData), sentimentIsPositiveMa: isSentimentPositive(rawData));
         } else if (message.name == "console") {
+            // DEBUG: Use the following method to print console logs from the WKWebView
+            // window.webkit.messageHandlers.console.postMessage("SOME STRING");
             print("WKWebView Log: \(message.body)")
+        }
+    }
+    
+    func reloadChart(dict: NSDictionary) {
+        if let name = dict.valueForKey("chartname") {
+            switch name as! String {
+            case "forcenode":
+                let term = dict.valueForKey("name") as! String
+                Network.sharedInstance.findSynonyms(term)
+            default:
+                Log("Can't Reload unknown chart [\(name)]")
+            }
         }
     }
     

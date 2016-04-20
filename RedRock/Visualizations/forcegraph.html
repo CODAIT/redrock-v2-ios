@@ -117,6 +117,9 @@ force
           }
         }
       )
+    .on("click", function(d) {
+        window.webkit.messageHandlers.callbackHandler.postMessage({action: "reload", chartname: "forcenode", name: d.name});
+       })
 
     node.append("text")
     .attr("x", function(d){return 4+radiusScale(d.value);})
