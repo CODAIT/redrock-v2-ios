@@ -195,6 +195,8 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
     }
     
     override func onDataSet() {
+        self.searchText = self.json["searchTerm"].string!
+        
         Log("onDataSet... mainFile... \(mainFile)")
         let tempVisPath = NSURL(fileURLWithPath: Config.visualizationFolderPath).URLByAppendingPathComponent(NSURL(fileURLWithPath: self.mainFile).path!)
         let request = NSURLRequest(URL: tempVisPath)
