@@ -66,6 +66,9 @@ class Config {
     static var userName: String?
     static var userNameEncoded: String? {
         get {
+            guard userName != nil else {
+                return "none"
+            }
             return userName!.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
         }
     }
