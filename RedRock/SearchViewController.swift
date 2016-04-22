@@ -72,7 +72,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        checkIfUserHasLoggedIn()
+        // checkIfUserHasLoggedIn()
     }
     
     func checkIfUserHasLoggedIn(){ //is this obsolete?
@@ -170,9 +170,9 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     override func viewWillAppear(animated: Bool) {
         self.resetViewController()
         
-//        liveButton.setTitle("Live \(Config.liveSearches[Config.liveCurrentSearchIndex])", forState: UIControlState.Normal)
+        // liveButton.setTitle("Live \(Config.liveSearches[Config.liveCurrentSearchIndex])", forState: UIControlState.Normal)
         
-        setLoginText()
+        // setLoginText()
     }
     
     func setLoginText(){
