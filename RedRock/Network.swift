@@ -142,8 +142,9 @@ class Network
         }
         
         var parameters = Dictionary<String,String>()
-        parameters["search"] = searchText.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
-        let req = self.createRequest(Config.serverLogin, paremeters: parameters)
+        parameters["searchTerm"] = searchText.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+        parameters["count"] = "10"
+        let req = self.createRequest(Config.serverSynonyms, paremeters: parameters)
         executeRequest(req, callBack: self.callWordDistanceDelegate)
     }
     

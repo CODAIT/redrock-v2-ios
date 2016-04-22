@@ -46,7 +46,9 @@ class Config {
     static let displayRefreshAvailable = false //enable refresh for streaming data
     
     // MARK: - Server
-    static let serverAddress = "http://localhost:16666" // Localhost
+//    static let serverAddress = "http://localhost:16666" // Localhost
+    static let serverAddress = "http://spark11:16666" // spark11
+    static let serverSynonyms = "tiara/getsynonyms"
     static let serverSearch = "ss/search" // Includes all responses in one
     static let serverPowertrackWordcount = "ss/powertrack/wordcount"
     static let serverSentimentAnalysis = "ss/sentiment/analysis"
