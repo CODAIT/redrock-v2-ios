@@ -484,7 +484,8 @@ class CenterViewController: UIViewController, MKMapViewDelegate, UIScrollViewDel
                 self.onDummyRequestSuccess(nil)
             }
         } else {
-            networkConnection.searchRequest(self.searchText!)
+            // networkConnection.searchRequest(self.searchText!)
+            networkConnection.findSynonyms(self.searchText!)
         }
     }
     
