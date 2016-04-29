@@ -28,6 +28,7 @@ enum VisTypes {
     case TreeMap
     case CirclePacking
     case ForceGraph
+    case CommunityGraph
     case StackedBar
     case StackedBarDrilldownCirclePacking
     case TimeMap

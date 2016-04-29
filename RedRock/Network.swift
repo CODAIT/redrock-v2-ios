@@ -32,6 +32,7 @@ protocol NetworkDelegate {
     func handleLocationCallBack(json:JSON?, error: NSError?)
     func handleProfessionCallBack(json:JSON?, error: NSError?)
     func handleWordDistanceCallBack(json:JSON?, error: NSError?)
+    func handleWordCommunityGraphCallBack(json:JSON?, error: NSError?)
     func handleWordClusterCallBack(json:JSON?, error: NSError?)
     func handleTopMetrics(json:JSON?, error: NSError?)
     func displayRequestTime(time: String)
@@ -321,6 +322,7 @@ class Network
         self.delegate?.handleLocationCallBack(json, error: error)
         self.delegate?.handleProfessionCallBack(json, error: error)
         self.delegate?.handleWordDistanceCallBack(json, error: error)
+        self.delegate?.handleWordCommunityGraphCallBack(json, error: error)
         self.delegate?.handleWordClusterCallBack(json, error: error)
         self.delegate?.handleTopMetrics(json, error: error)
         self.delegate?.responseProcessed()
@@ -349,6 +351,13 @@ class Network
     private func callWordDistanceDelegate(json: JSON?, error: NSError?)
     {
         self.delegate?.handleWordDistanceCallBack(json, error: error)
+        // TODO: remove \/
+        self.delegate?.handleWordCommunityGraphCallBack(json, error: error)
+    }
+    
+    private func callWordCommunityDelegate(json: JSON?, error: NSError?)
+    {
+        self.delegate?.handleWordCommunityGraphCallBack(json, error: error)
     }
     
     private func callWordClusterDelegate(json: JSON?, error: NSError?)

@@ -121,10 +121,10 @@ class Config {
 
     // MARK: Settings Historic
     
-    static let visualizationTypesHistoric: [VisTypes] = [.ForceGraph]
-    static let visualizationButtonsHistoric         = ["RR2.0_Network_Blue"]
-    static let visualizationButtonsSelectedHistoric = ["RR2.0_Network_WHITE"]
-    static let visualizationTitlesHistoric          = ["Network Graph - Related Words"]
+    static let visualizationTypesHistoric: [VisTypes] = [.ForceGraph, .CommunityGraph]
+    static let visualizationButtonsHistoric         = ["RR2.0_Network_Blue", "RR2.0_Network_Blue"]
+    static let visualizationButtonsSelectedHistoric = ["RR2.0_Network_WHITE", "RR2.0_Network_WHITE"]
+    static let visualizationTitlesHistoric          = ["Network Graph - Related Words", "Test"]
     
     static let visualizationDescriptionHistoric = [
         "Shows the closest words to the searched term, and the size of the circle represents its frequency."
@@ -135,7 +135,8 @@ class Config {
         VisTypes.StackedBar: BottomDrawerState.ClosedPartial,
         VisTypes.TreeMap: BottomDrawerState.ClosedFully,
         VisTypes.TimeMap: BottomDrawerState.ClosedPartial,
-        VisTypes.ForceGraph: BottomDrawerState.ClosedFully
+        VisTypes.ForceGraph: BottomDrawerState.ClosedFully,
+        VisTypes.CommunityGraph: BottomDrawerState.ClosedFully
     ]
     
     // MARK: Settings Live

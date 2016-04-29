@@ -37,6 +37,8 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
             return "stackedbar.html"
         case .ForceGraph:
             return "forcegraph.html"
+        case .CommunityGraph:
+            return "forcegraph.html"
         case .StackedBarDrilldownCirclePacking:
             return "StackedBarDrilldownCirclepacking.html"
         case .SidewaysBar:
@@ -264,6 +266,8 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
                 self.transformDataForCirclepacking()
             case .ForceGraph:
                 self.transformDataForForcegraph()
+            case .CommunityGraph:
+                self.transformDataForCommunitygraph()
             case .StackedBar:
                 self.transformDataForStackedbar()
             case .SidewaysBar:
@@ -676,6 +680,72 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
     }
     
     func transformDataForForcegraph(){
+        func loadData() {
+            onLoadingState()
+            if self.chartData.count > 0
+            {
+                let viewSize = self.view.bounds.size
+                
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                    
+                    var script9 = "var myData = '{\"nodes\": [ {\"name\":\"\(self.searchText)\",\"value\":\(self.chartData[0][2]),\"group\":1}, " //the search text just arbitrarily takes the value of the first data point as its value
+                    for r in 0..<self.self.chartData.count{
+                        script9+="{\"name\": \""
+                        script9+=self.chartData[r][0]
+                        script9+="\", \"value\": "
+                        script9+=self.chartData[r][2]
+                        script9+=", \"group\": 2"
+                        script9+="}"
+                        if(r != (self.chartData.count-1)){
+                            script9+=","
+                        }
+                    }
+                    script9+="], \"links\": ["
+                    for r in 0..<self.chartData.count{
+                        script9+="{\"source\": 0"
+                        script9+=", \"target\": "
+                        script9+="\(r+1)"
+                        script9+=", \"distance\": "
+                        let myInteger = Int((self.chartData[r][1] as NSString).floatValue*10000)
+                        script9+="\(myInteger)"
+                        script9+="}"
+                        if(r != (self.chartData.count-1)){
+                            script9+=","
+                        }
+                    }
+                    script9+="]}'; var w = \(viewSize.width); var h = \(viewSize.height); renderChart(myData,w,h);"
+                    
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.webView.evaluateJavaScript(script9, completionHandler: nil)
+                        self.onSuccessState()
+                    })
+                })
+                
+            }
+            else {
+                onNoDataState()
+            }
+            
+        }
+        
+        let numberOfColumns = 3        // number of columns
+        let containerName = "distance" // name of container for data
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+            let data = self.returnArrayOfData(numberOfColumns, containerName: containerName, json: self.json!)
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                if(data != nil){
+                    self.chartData = data!
+                    loadData()
+                }
+                else{
+                    self.errorDescription = Config.serverErrorMessage
+                }
+            })
+        })
+    }
+    
+    func transformDataForCommunitygraph(){
         func loadData() {
             onLoadingState()
             if self.chartData.count > 0

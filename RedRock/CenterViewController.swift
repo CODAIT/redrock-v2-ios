@@ -547,6 +547,10 @@ class CenterViewController: UIViewController, MKMapViewDelegate, UIScrollViewDel
         setJsonForVisType(json, error: error, type: .ForceGraph)
     }
     
+    func handleWordCommunityGraphCallBack(json: JSON?, error: NSError?) {
+        setJsonForVisType(json, error: error, type: .CommunityGraph)
+    }
+    
     func handleWordClusterCallBack(json: JSON?, error: NSError?) {
         setJsonForVisType(json, error: error, type: .CirclePacking)
     }
@@ -700,6 +704,7 @@ class CenterViewController: UIViewController, MKMapViewDelegate, UIScrollViewDel
         self.handleSentimentsCallBack(json, error: nil)
         
         self.handleWordDistanceCallBack(json, error: nil)
+        self.handleWordCommunityGraphCallBack(json, error: nil)
         
         self.handleWordClusterCallBack(json, error: nil)
     }
