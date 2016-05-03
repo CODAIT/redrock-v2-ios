@@ -61,7 +61,7 @@ function returnColor(parentColor, number){
     }
 }
 
-function renderChart(data, w, h) {
+function renderChart(data, w, h, minX, minY, maxX, maxY) {
     
     var width = w,
     height = h;
@@ -86,11 +86,11 @@ function renderChart(data, w, h) {
     //d3.csv("http://queenatarms.com/stuff/b2.csv", function(data){
 
 	var xScale = d3.scale.linear()
-		.domain([0, 30 ])
+		.domain([minX, maxX ])
 		.range([0, width]);
 
 	var yScale = d3.scale.linear()
-		.domain([0, 30 ])
+		.domain([minY, maxY ])
 		.range([0, height]);
 
 	var numberAfterFilter = 0;

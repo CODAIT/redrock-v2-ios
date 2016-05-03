@@ -676,6 +676,12 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
                 let viewSize = self.view.bounds.size
                 
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+
+                    var minX = 0.0
+                    var minY = 0.0
+                    
+                    var maxX = 0.0
+                    var maxY = 0.0
                     
                     var script9 = "var myData = '{\"nodes\": ["
                         
@@ -687,20 +693,42 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
                         script9+=", \"degree\": "
                         script9+="1" //TODO: fix when when data isn't broken
                         script9+=", \"community\": "
-                        script9+=self.chartData[r][2]
-                        script9+=", \"x\": "
                         script9+=self.chartData[r][3]
-                        script9+=", \"y\": "
+                        script9+=", \"x\": "
                         script9+=self.chartData[r][4]
+                        
+                        let thisX = (self.chartData[r][4] as NSString).doubleValue
+                        if( thisX > maxX )
+                        {
+                            maxX = thisX
+                        }
+                        if( thisX < minX )
+                        {
+                            minX = thisX
+                        }
+                        
+                        script9+=", \"y\": "
+                        script9+=self.chartData[r][5]
+
+                        let thisY = (self.chartData[r][5] as NSString).doubleValue
+                        if( maxY < thisY )
+                        {
+                            maxY = thisY
+                        }
+                        
+                        if( thisY < minY )
+                        {
+                            minY = thisY
+                        }
+
+                        
                         script9+="}"
                         if(r != (self.chartData.count-1)){
                             script9+=","
                         }
                     }
                     script9+="], \"links\": ["
-                    script9+="]}'; var w = \(viewSize.width); var h = \(viewSize.height); renderChart(myData,w,h);"
-                    
-                    //Log(script9);
+                    script9+="]}'; var w = \(viewSize.width); var h = \(viewSize.height); var minX = \(minX); var minY = \(minY); var maxX = \(maxX); var maxY = \(maxY); renderChart(myData,w,h,minX, minY, maxX,maxY);"
  
                     //let script9 = "var data = '{\"nodes\": [{\"label\":\"Hebert\",\"id\":2,\"degree\":2,\"community\":1,\"x\":20,\"y\":5}, {\"label\":\"Scads\",\"id\":3,\"degree\":5,\"community\":2,\"x\":23,\"y\":22.1}], \"links\":[]}'; renderChart(data, 960, 760);"
                     
