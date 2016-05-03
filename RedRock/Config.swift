@@ -32,13 +32,12 @@ class Config {
     static let dummyDataDelay = 1.0 // Seconds
     
     // MARK: - Server
-    // Synonyms: http://spark11:16666/tiara/getsynonyms?searchterm=%23love&count=10
-    // Top Terms: http://spark11:16666/tiara/gettopterms?count=20
-    // Graph: http://spark11:16666/tiara/getcommunities?searchterms=%23love,%23god&get3d=false
     
 //    static let serverAddress = "http://localhost:16666" // Localhost
     static let serverAddress = "http://spark11:16666" // spark11
     static let serverSynonyms = "tiara/getsynonyms"
+    static let serverTopTerms = "tiara/gettopterms"
+    static let serverCommunities = "tiara/getcommunities"
     
     // MARK: - Colors
     static let darkBlueColor = UIColor(rgba: "#1C3648") // Dark Blue

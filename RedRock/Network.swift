@@ -41,9 +41,10 @@ class Network
     
     // MARK: Call Requests
     
+    // Synonyms: http://spark11:16666/tiara/getsynonyms?searchterm=%23love&count=10
     func findSynonyms(searchText: String, callback: NetworkRequestResponse) {
         if Config.useDummyData {
-            var path = "response_spark"
+            var path = "response_synonyms"
             if searchText.containsString("#") {
                 path = "response_spark2"
             }
@@ -55,6 +56,35 @@ class Network
         parameters["searchterm"] = searchText.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
         parameters["count"] = "10"
         let req = self.createRequest(Config.serverSynonyms, paremeters: parameters)
+        executeRequest(req, callback: callback)
+    }
+    
+    // Top Terms: http://spark11:16666/tiara/gettopterms?count=20
+    func findTopTerms(callback: NetworkRequestResponse) {
+        if Config.useDummyData {
+            let path = "response_topterms"
+            dispatchRequestForResource(path, callback: callback)
+            return
+        }
+        
+        var parameters = Dictionary<String,String>()
+        parameters["count"] = "10"
+        let req = self.createRequest(Config.serverTopTerms, paremeters: parameters)
+        executeRequest(req, callback: callback)
+    }
+    
+    // Graph: http://spark11:16666/tiara/getcommunities?searchterms=%23love,%23god&get3d=false
+    func findCommunities(searchText: String, callback: NetworkRequestResponse) {
+        if Config.useDummyData {
+            let path = "response_communities"
+            dispatchRequestForResource(path, callback: callback)
+            return
+        }
+        
+        var parameters = Dictionary<String,String>()
+        parameters["searchterms"] = searchText.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+        parameters["get3d"] = "false"
+        let req = self.createRequest(Config.serverCommunities, paremeters: parameters)
         executeRequest(req, callback: callback)
     }
     
