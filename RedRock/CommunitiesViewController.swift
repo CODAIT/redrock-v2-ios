@@ -27,14 +27,14 @@ import UIKit
 
 class CommunitiesViewController: UIViewController {
 
-    var searchTerm: String = "#spark"
+    var searchTerms: String = "#spark"
     var wv: VisMasterViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Setup Vis
-        wv = VisFactory.visualizationControllerForType(VisTypes.ForceGraph)!
+        wv = VisFactory.visualizationControllerForType(.CommunityGraph)!
         wv!.view.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
         
         self.addChildViewController(wv!)
@@ -42,7 +42,7 @@ class CommunitiesViewController: UIViewController {
         wv?.didMoveToParentViewController(self)
         
         // Make request
-        Network.sharedInstance.findSynonyms(searchTerm) { (json, error) in
+        Network.sharedInstance.findCommunities(searchTerms) { (json, error) in
             guard self.wv != nil else {
                 log.warning("Network response can not find webview to display data")
                 return

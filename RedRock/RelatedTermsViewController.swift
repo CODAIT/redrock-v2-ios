@@ -27,7 +27,7 @@ import UIKit
 
 class RelatedTermsViewController: UIViewController {
 
-    var searchTerm: String = "#spark"
+    var searchTerm: String = "@ibm"
     var wv: VisMasterViewController?
     
     override func viewDidLoad() {
@@ -61,14 +61,17 @@ class RelatedTermsViewController: UIViewController {
         wv?.onBlur()
     }
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        // Pass along the search terms
+        let searchTerms = (wv?.chartData)!.map({"\($0[0])"}).joinWithSeparator(",")
+        (segue.destinationViewController as! CommunitiesViewController).searchTerms = searchTerms
     }
-    */
 
 }

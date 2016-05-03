@@ -80,10 +80,13 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Search" id="QK0-rU-fw8"/>
+                    <connections>
+                        <outlet property="searchField" destination="yYW-iv-Gql" id="1LH-a4-J00"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1TQ-Bu-Yev" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-246" y="-1234"/>
+            <point key="canvasLocation" x="-194" y="-1216"/>
         </scene>
         <!--Related Terms-->
         <scene sceneID="Mpd-Ql-6Yd">
