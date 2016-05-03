@@ -33,19 +33,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SearchViewControllerDeleg
     var searchViewController: SearchViewController?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        
         
         // Initialize the userName
-        Config.userName = NSUserDefaults.standardUserDefaults().objectForKey(Config.loginKeyForNSUserDefaults) as? String
-        
-        window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        
-        storyboard = UIStoryboard(name: "Main", bundle: nil)
-        
-        displaySearchViewController()
-        if Config.skipSearchScreen {
-            displayContainerViewController(searchViewController!, searchText: "")
-        }
+//        Config.userName = NSUserDefaults.standardUserDefaults().objectForKey(Config.loginKeyForNSUserDefaults) as? String
+//        
+//        window = UIWindow(frame: UIScreen.mainScreen().bounds)
+//        
+//        storyboard = UIStoryboard(name: "Main", bundle: nil)
+
+        // TODO: remove
+//        displaySearchViewController()
+//        if Config.skipSearchScreen {
+//            displayContainerViewController(searchViewController!, searchText: "")
+//        }
         
         /*
         NOTE: Copying Visualisations folder to '/tmp/www' to work around an issue with

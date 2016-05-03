@@ -39,6 +39,8 @@ protocol NetworkDelegate {
     func responseProcessed()
 }
 
+typealias NetworkRequestResponse = (json: JSON?, error: NSError?) -> ()
+
 class Network
 {
     static let sharedInstance = Network()
@@ -132,13 +134,14 @@ class Network
         executeRequest(req, callBack: callBack)
     }
     
-    func findSynonyms(searchText: String) {
+    func findSynonyms(searchText: String, callback: NetworkRequestResponse? = nil) {
+        let cb = callback != nil ? callback : self.callWordDistanceDelegate
         if Config.useDummyData {
             var path = "response_spark"
             if searchText.containsString("#") {
                 path = "response_spark2"
             }
-            dispatchRequestForResource(path, callBack: self.callWordDistanceDelegate)
+            dispatchRequestForResource(path, callBack: cb!)
             return
         }
         
@@ -146,7 +149,7 @@ class Network
         parameters["searchTerm"] = searchText.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
         parameters["count"] = "10"
         let req = self.createRequest(Config.serverSynonyms, paremeters: parameters)
-        executeRequest(req, callBack: self.callWordDistanceDelegate)
+        executeRequest(req, callBack: cb!)
     }
     
     func dispatchRequestForResource(path: String, callBack: (json: JSON?, error: NSError?) -> ())

@@ -218,7 +218,7 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
     override func onFocus() {
         switch type! {
         case .ForceGraph :
-            webView.evaluateJavaScript("stopAnimation();", completionHandler: nil)
+            webView.evaluateJavaScript("startAnimation();", completionHandler: nil)
         default:
             break
         }
@@ -230,7 +230,7 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
         
         switch type! {
         case .ForceGraph :
-            webView.evaluateJavaScript("startAnimation();", completionHandler: nil)
+            webView.evaluateJavaScript("stopAnimation();", completionHandler: nil)
         default:
             break
         }
@@ -714,6 +714,10 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
                         }
                     }
                     script9+="]}'; var w = \(viewSize.width); var h = \(viewSize.height); renderChart(myData,w,h);"
+                    
+                    // For testing
+                    script9 = "var myData='{\"nodes\":[    {\"name\":\"Myriel\",\"value\":52,\"group\":1},    {\"name\":\"Labarre\",\"value\":5,\"group\":2},    {\"name\":\"Valjean\",\"value\":17,\"group\":2},    {\"name\":\"Mme.deR\",\"value\":55,\"group\":2},    {\"name\":\"Mme.deR\",\"value\":17,\"group\":2},    {\"name\":\"Isabeau\",\"value\":44,\"group\":2},    {\"name\":\"Mme.deR\",\"value\":17,\"group\":2},    {\"name\":\"Isabeau\",\"value\":22,\"group\":2},    {\"name\":\"Isabeau\",\"value\":17,\"group\":2},    {\"name\":\"Gervais\",\"value\":33,\"group\":2}  ],  \"links\":[    {\"source\":0,\"target\":1,\"distance\":33},    {\"source\":0,\"target\":2,\"distance\":22},    {\"source\":0,\"target\":3,\"distance\":22},    {\"source\":0,\"target\":4,\"distance\":11},    {\"source\":0,\"target\":5,\"distance\":22},    {\"source\":0,\"target\":6,\"distance\":22},    {\"source\":0,\"target\":7,\"distance\":43},    {\"source\":0,\"target\":8,\"distance\":22},    {\"source\":0,\"target\":9,\"distance\":22}  ]}'; var w = \(viewSize.width); var h = \(viewSize.height); renderChart(myData,w,h);";
+
                     
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         self.webView.evaluateJavaScript(script9, completionHandler: nil)
