@@ -110,7 +110,7 @@ class Network
     }
     
 
-    private func executeRequest(req: String, callback: ((json: JSON?, error: NSError?) -> ())?) {
+    private func executeRequest(req: String, callback: NetworkRequestResponse?) {
         log.debug("Sending Request: " + req)
         Network.waitingForResponse = true
         self.startTime = CACurrentMediaTime()
@@ -197,7 +197,7 @@ class Network
     
     // MARK: - Utils
     
-    func dispatchRequestForResource(path: String, callback: (json: JSON?, error: NSError?) -> ())
+    func dispatchRequestForResource(path: String, callback: NetworkRequestResponse)
     {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
             
@@ -237,7 +237,7 @@ class Network
         
     }
     
-    func callCallbackAfterDelay(json: JSON?, error: NSError?, callback: (json: JSON?, error: NSError?) -> ()) {
+    func callCallbackAfterDelay(json: JSON?, error: NSError?, callback: NetworkRequestResponse) {
         let delay = Config.dummyDataDelay * Double(NSEC_PER_SEC)
         let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
         dispatch_after(time, dispatch_get_main_queue()) {
