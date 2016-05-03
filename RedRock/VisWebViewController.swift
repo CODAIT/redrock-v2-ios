@@ -38,7 +38,7 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
         case .ForceGraph:
             return "forcegraph.html"
         case .CommunityGraph:
-            return "forcegraph.html"
+            return "communitygraph.html"
         case .StackedBarDrilldownCirclePacking:
             return "StackedBarDrilldownCirclepacking.html"
         case .SidewaysBar:
@@ -121,7 +121,9 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
     }
     
     override func onDataSet() {
-        self.searchText = self.json["searchTerm"].string!
+        if  self.json["searchTerm"] {
+            self.searchText = self.json["searchTerm"].string!
+        }
         
         log.debug("Loading mainFile: \(mainFile)")
         let tempVisPath = NSURL(fileURLWithPath: Config.visualizationFolderPath).URLByAppendingPathComponent(NSURL(fileURLWithPath: self.mainFile).path!)
@@ -665,36 +667,43 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
             onLoadingState()
             if self.chartData.count > 0
             {
+                
+                //Log("transformDataForCommunitygraph... ");
+                //Log(self.chartData);
+                
+                //var data = '{"nodes": [{"label":"Myriel","id":1,"degree":7,"community":1,"x":5,"y":5}, {"label":"Hebert","id":2,"degree":2,"community":1,"x":20,"y":5}, {"label":"Scads","id":3,"degree":5,"community":2,"x":23,"y":22.1}], "links":[ {"source":1,"target":0,"weight":2.0}, {"source":2,"target":4,"weight":5.0}, {"source":4,"target":1,"weight":1.0} ]}'
+                
                 let viewSize = self.view.bounds.size
                 
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
                     
-                    var script9 = "var myData = '{\"nodes\": [ {\"name\":\"\(self.searchText)\",\"value\":\(self.chartData[0][2]),\"group\":1}, " //the search text just arbitrarily takes the value of the first data point as its value
-                    for r in 0..<self.self.chartData.count{
-                        script9+="{\"name\": \""
+                    var script9 = "var myData = '{\"nodes\": ["
+                        
+                    for r in 0..<self.chartData.count{
+                        script9+="{\"label\": \""
                         script9+=self.chartData[r][0]
-                        script9+="\", \"value\": "
+                        script9+="\", \"id\": "
+                        script9+=self.chartData[r][1]
+                        script9+=", \"degree\": "
+                        script9+="1" //TODO: fix when when data isn't broken
+                        script9+=", \"community\": "
                         script9+=self.chartData[r][2]
-                        script9+=", \"group\": 2"
+                        script9+=", \"x\": "
+                        script9+=self.chartData[r][3]
+                        script9+=", \"y\": "
+                        script9+=self.chartData[r][4]
                         script9+="}"
                         if(r != (self.chartData.count-1)){
                             script9+=","
                         }
                     }
                     script9+="], \"links\": ["
-                    for r in 0..<self.chartData.count{
-                        script9+="{\"source\": 0"
-                        script9+=", \"target\": "
-                        script9+="\(r+1)"
-                        script9+=", \"distance\": "
-                        let myInteger = Int((self.chartData[r][1] as NSString).floatValue*10000)
-                        script9+="\(myInteger)"
-                        script9+="}"
-                        if(r != (self.chartData.count-1)){
-                            script9+=","
-                        }
-                    }
                     script9+="]}'; var w = \(viewSize.width); var h = \(viewSize.height); renderChart(myData,w,h);"
+                    
+                    //Log(script9);
+ 
+                    //let script9 = "var data = '{\"nodes\": [{\"label\":\"Hebert\",\"id\":2,\"degree\":2,\"community\":1,\"x\":20,\"y\":5}, {\"label\":\"Scads\",\"id\":3,\"degree\":5,\"community\":2,\"x\":23,\"y\":22.1}], \"links\":[]}'; renderChart(data, 960, 760);"
+                    
                     
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         self.webView.evaluateJavaScript(script9, completionHandler: nil)
@@ -709,14 +718,18 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
             
         }
         
-        let numberOfColumns = 3        // number of columns
-        let containerName = "distance" // name of container for data
+        
+        let containerName = "communities" // name of container for data
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-            let data = self.returnArrayOfData(numberOfColumns, containerName: containerName, json: self.json!)
+            
+            let communityData = self.json[containerName]
+            
+            let nodes = self.returnArrayOfData(7, containerName: "nodes", json: communityData)
+            
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                if(data != nil){
-                    self.chartData = data!
+                if(nodes != nil){
+                    self.chartData = nodes!
                     loadData()
                 }
                 else{

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.node {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+.link {
+  stroke: #999;
+  stroke-opacity: .6;
+}
+
+</style>
+<body>
+
+
+
+
+<script src="d3.min.js" charset="utf-8"></script>
+<script>
+
+var parentColor = d3.scale.ordinal().range(["1", "2", "3", "4", "5", "6", "7", "8"]);
+var color1 = d3.scale.ordinal().range(["#325c80","#325c80","#325c80","#325c80","#325c80", "#325c80"]);
+var color2 = d3.scale.ordinal().range(["#a5266d","#a5266d","#a5266d","#a5266d","#a5266d", "#a5266d"]);
+var color3 = d3.scale.ordinal().range(["#018571","#018571","#018571","#018571","#018571", "#018571"]);
+var color4 = d3.scale.ordinal().range(["#734098","#734098","#734098","#734098","#734098", "#734098"]);
+var color5 = d3.scale.ordinal().range(["#4b853d","#4b853d","#4b853d","#4b853d","#4b853d", "#4b853d"]);
+var color6 = d3.scale.ordinal().range(["#d54326","#d54326","#d54326","#d54326","#d54326", "#d54326"]);
+var color7 = d3.scale.ordinal().range(["#1c3648","#1c3648","#1c3648","#1c3648","#1c3648", "#1c3648"]);
+var color8 = d3.scale.ordinal().range(["#601246","#601246","#601246","#601246","#601246", "#601246"]);
+
+function returnColor(parentColor, number){
+    if(parentColor == "1"){
+        return color1(number);
+    }
+    else if(parentColor == "2"){
+        return color2(number);
+    }
+    else if(parentColor == "3"){
+        return color3(number);
+    }
+    else if(parentColor == "4"){
+        return color4(number);
+    }
+    else if(parentColor == "5"){
+        return color5(number);
+    }
+    else if(parentColor == "6"){
+        return color6(number);
+    }
+    else if(parentColor == "7"){
+        return color7(number);
+    }
+    else if(parentColor == "8"){
+        return color8(number);
+    }
+    else{
+        return "#FF69B4";
+    }
+}
+
+function renderChart(data, w, h) {
+    
+    var width = w,
+    height = h;
+    
+    var force = d3.layout.force()
+    .charge(-120)
+    .linkDistance(30)
+    .size([width, height]);
+    
+    var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .attr("background-color", "red");
+    
+    
+    
+	
+    var pdata = JSON.parse(data);
+    
+    console.log(pdata);
+    
+    //d3.csv("http://queenatarms.com/stuff/b2.csv", function(data){
+
+	var xScale = d3.scale.linear()
+		.domain([0, 30 ])
+		.range([0, width]);
+
+	var yScale = d3.scale.linear()
+		.domain([0, 30 ])
+		.range([0, height]);
+
+	var numberAfterFilter = 0;
+		
+	svg.selectAll("circle")
+	.data(pdata.nodes)
+	.enter()
+	.append("circle")
+	//.filter(function(d) { return d.degree > 1})
+	.attr("cx", function(d) {
+		return xScale(d.x);
+	})
+	.attr("cy", function(d) {
+		numberAfterFilter = numberAfterFilter + 1;
+		return yScale(d.y);
+	})
+	.attr("r", 5)
+	.style("fill", function(d) {
+		return returnColor(parentColor(d.community),2);
+	});
+	
+	//console.log(numberAfterFilter);
+       
+
+};
+
+//function renderMyChartBro() {
+//var data = '{"nodes": [{"label":"Hebert","id":2,"degree":2,"community":1,"x":20,"y":5}, {"label":"Scads","id":3,"degree":5,"community":2,"x":23,"y":22.1}], "links":[ {"source":1,"target":0,"weight":2.0}, {"source":2,"target":4,"weight":5.0} ]}'
+//renderChart(data, 960, 760);
+//}
+
+</script>
