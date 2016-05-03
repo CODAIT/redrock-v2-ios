@@ -23,30 +23,23 @@
 */
 
 import UIKit
+import XCGLogger
+
+let log = XCGLogger.defaultInstance()
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, SearchViewControllerDelegate, ContainerViewControllerDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var storyboard: UIStoryboard?
-    var containerViewController: ContainerViewController?
-    var searchViewController: SearchViewController?
-
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        
-        // Initialize the userName
-//        Config.userName = NSUserDefaults.standardUserDefaults().objectForKey(Config.loginKeyForNSUserDefaults) as? String
-//        
-//        window = UIWindow(frame: UIScreen.mainScreen().bounds)
-//        
-//        storyboard = UIStoryboard(name: "Main", bundle: nil)
-
-        // TODO: remove
-//        displaySearchViewController()
-//        if Config.skipSearchScreen {
-//            displayContainerViewController(searchViewController!, searchText: "")
-//        }
+        // Setup Logger
+        #if DEBUGLOG
+            log.setup(.Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
+        #else
+            log.setup(.Severe, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
+        #endif
         
         /*
         NOTE: Copying Visualisations folder to '/tmp/www' to work around an issue with
@@ -62,15 +55,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SearchViewControllerDeleg
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-        
-        // Save the userName
-        NSUserDefaults.standardUserDefaults().setValue(Config.userName, forKey: Config.loginKeyForNSUserDefaults)
-        
-        if containerViewController != nil {
-            containerViewController?.applicationWillResignActive(application)
-        }
-        
-        Network.sharedInstance.logoutRequest()
     }
 
     func applicationDidEnterBackground(application: UIApplication) {
@@ -84,10 +68,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SearchViewControllerDeleg
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        
-        if containerViewController != nil {
-            containerViewController?.applicationDidBecomeActive(application)
-        }
     }
 
     func applicationWillTerminate(application: UIApplication) {
@@ -96,67 +76,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SearchViewControllerDeleg
 
 }
 
-// MARK: - SearchViewControllerDelegate
-
-extension AppDelegate {
-    
-    func displayContainerViewController(currentViewController: UIViewController, searchText: String) {
-        if (containerViewController == nil) {
-            containerViewController = ContainerViewController()
-            containerViewController!.delegate = self
-        }
-        else
-        {
-            containerViewController!.centerViewController.searchText = searchText
-        }
-        containerViewController!.searchText = searchText
-        
-        // Animate the transition to the new view controller
-        let tr = CATransition()
-        tr.duration = 0.5
-        tr.type = kCATransitionFade
-        currentViewController.view.window!.layer.addAnimation(tr, forKey: kCATransition)
-        currentViewController.presentViewController(containerViewController!, animated: false, completion: nil)
-    }
-    
-}
-
-// MARK: - ContainerViewControllerDelegate
-
-extension AppDelegate {
-    
-    func displaySearchViewController() {
-        // On first launch
-        if (searchViewController == nil) {
-            searchViewController = storyboard!.instantiateViewControllerWithIdentifier("SearchViewController") as? SearchViewController
-            searchViewController!.delegate = self
-            
-            self.window!.rootViewController = searchViewController
-            self.window!.makeKeyAndVisible()
-        }
-        else
-        {
-            searchViewController?.resetSearchView()
-        }
-        
-        // When returning to search
-        if (containerViewController != nil) {
-            // Animate the transition to the new view controller
-            let tr = CATransition()
-            tr.duration = 0.2
-            tr.type = kCATransitionFade
-            containerViewController?.view.window!.layer.addAnimation(tr, forKey: kCATransition)
-            containerViewController?.dismissViewControllerAnimated(false, completion: nil)
-            containerViewController = nil
-        }
-    }
-    
-}
 
 // MARK: Utils
 
 func copyFolderToTempFolder(filePath: String?) -> String?
 {
+    log.verbose("Copying \(filePath) to /tmp/www")
     let fileMgr = NSFileManager.defaultManager()
     let tmpPath = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("www")
     let error: NSErrorPointer = nil
@@ -164,7 +89,7 @@ func copyFolderToTempFolder(filePath: String?) -> String?
         try fileMgr.createDirectoryAtURL(tmpPath, withIntermediateDirectories: true, attributes: nil)
     } catch let error1 as NSError {
         error.memory = error1
-        print("Couldn't create www subdirectory. \(error)")
+        log.error("Couldn't create www subdirectory. \(error)")
         return nil
     }
     let destPath = tmpPath.path!
@@ -174,7 +99,7 @@ func copyFolderToTempFolder(filePath: String?) -> String?
             try fileMgr.removeItemAtPath(destPath)
         } catch let error1 as NSError {
             error.memory = error1
-            print("Couldn't delete folder /tmp/www. \(error)")
+            log.error("Couldn't delete folder /tmp/www. \(error)")
         }
     }
     // Copy files to temp dir
@@ -183,7 +108,7 @@ func copyFolderToTempFolder(filePath: String?) -> String?
             try fileMgr.copyItemAtPath(filePath!, toPath: destPath)
         } catch let error1 as NSError {
             error.memory = error1
-            print("Couldn't copy file to /tmp/www. \(error)")
+            log.error("Couldn't copy file to /tmp/www. \(error)")
             return nil
         }
     }

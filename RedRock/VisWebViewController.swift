@@ -55,11 +55,15 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
     
     var webView: WKWebView! = nil
     
-    var myDrilldown: VisMasterViewController! = nil
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        webView = createWKWebViewWithConfigurationForCallback()
+        visHolderView.addSubview(webView)
+    }
     
     func userContentController(userContentController: WKUserContentController, didReceiveScriptMessage message: WKScriptMessage) {
         if(message.name == "callbackHandler") {
-            Log("JavaScript is sending a message \(message.body)")
+            log.debug("JavaScript is sending a message \(message.body)")
     
             let body = message.body as! NSDictionary
             if let action = body.valueForKey("action") {
@@ -68,17 +72,14 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
                     self.clean()
                     reloadChart(body)
                 default:
-                    Log("Unknown action [\(action)] sent from web view")
+                    log.error("Unknown action [\(action)] sent from web view")
                 }
-            } else {
-                // let rawData = (message.body as! String)
-                // displayVisOverSentiment(transformDataForDisplayVisOverSentiment(rawData), sentimentIsPositiveMa: isSentimentPositive(rawData));
             }
             
         } else if (message.name == "console") {
             // DEBUG: Use the following method to print console logs from the WKWebView
             // window.webkit.messageHandlers.console.postMessage("SOME STRING");
-            print("WKWebView Log: \(message.body)")
+            log.debug("WKWebView Log: \(message.body)")
         }
     }
     
@@ -87,90 +88,13 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
             switch name as! String {
             case "forcenode":
                 let term = dict.valueForKey("name") as! String
-                Network.sharedInstance.findSynonyms(term)
+                Network.sharedInstance.findSynonyms(term) { (json, error) in
+                    self.json = json
+                }
             default:
-                Log("Can't Reload unknown chart [\(name)]")
+                log.error("Can't Reload unknown chart [\(name)]")
             }
         }
-    }
-    
-    func isSentimentPositive(rawData: String) -> Bool{
-        
-        if rawData.containsString("Positive"){
-            Log("positive sentiment detected")
-            return true
-        }
-        else if rawData.containsString("Negative"){
-            Log("Negative sentiment detected")
-            return false
-        }
-        else{
-            Log("ERROR: unsure what kind of sentiment this is in transformDataForDisplayVisOverSentiment in VisWebViewController.swift")
-            return false
-        }
-    }
-    
-    func transformDataForDisplayVisOverSentiment(rawData: String) -> NSDate{
-        let nsstringDate :NSString = rawData
-        
-        var dateFromChart = nsstringDate.substringFromIndex(30) //isolate the date
-        dateFromChart = String(dateFromChart.characters.dropLast(4)) //isolate the date
-        
-        let dateFormat = NSDateFormatter()
-        dateFormat.dateFormat = Config.dateFormat
-        dateFormat.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        
-        let myDate = dateFormat.dateFromString(dateFromChart)!
-        
-        return myDate
-    }
-    
-    func displayVisOverSentiment(selectedDate: NSDate, sentimentIsPositiveMa: Bool) {
-        let visHolder = UIStoryboard.visHolderViewController()!
-        self.addVisHolderController(visHolder)
-        
-        myDrilldown = VisFactory.visualizationControllerForType(.StackedBarDrilldownCirclePacking)!
-        visHolder.addVisualisationController(myDrilldown)
-        myDrilldown.onLoadingState()
-        
-        let dateFormat = NSDateFormatter()
-        
-        dateFormat.dateFormat = "yyyy-MM-dd'T'HH"
-        
-        dateFormat.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        
-        let selectedDateAsString = dateFormat.stringFromDate(selectedDate)
-        
-        let selectedDateAsStringWithZero = "\(selectedDateAsString):00:00.000Z"
-        
-        let timeInterval = NSTimeInterval((Config.dateRangeIntervalForStackedbarDrilldownInSeconds))
-        
-        let endDateAsString = dateFormat.stringFromDate(selectedDate.dateByAddingTimeInterval(timeInterval))
-        
-        let endDateAsStringWithZero = "\(endDateAsString):00:00.000Z"
-        
-        if(sentimentIsPositiveMa){
-            Network.sharedInstance.sentimentAnalysisRequest(self.searchText, sentiment: .Positive, startDatetime: selectedDateAsStringWithZero, endDatetime: endDateAsStringWithZero) { (json, error) -> () in
-                if error != nil {
-                    return
-                }
-                self.myDrilldown.json = json
-            }
-        }
-        else{
-            Network.sharedInstance.sentimentAnalysisRequest(self.searchText, sentiment: .Negative, startDatetime: selectedDateAsStringWithZero, endDatetime: endDateAsStringWithZero) { (json, error) -> () in
-                if error != nil {
-                    return
-                }
-                self.myDrilldown.json = json
-            }
-        }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        webView = createWKWebViewWithConfigurationForCallback()
-        visHolderView.addSubview(webView)
     }
     
     func createWKWebViewWithConfigurationForCallback() -> WKWebView{
@@ -199,20 +123,10 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
     override func onDataSet() {
         self.searchText = self.json["searchTerm"].string!
         
-        Log("onDataSet... mainFile... \(mainFile)")
+        log.debug("Loading mainFile: \(mainFile)")
         let tempVisPath = NSURL(fileURLWithPath: Config.visualizationFolderPath).URLByAppendingPathComponent(NSURL(fileURLWithPath: self.mainFile).path!)
         let request = NSURLRequest(URL: tempVisPath)
         webView.loadRequest(request)
-        
-        switch type! {
-        case .StackedBar :
-            if let drilldown = myDrilldown{
-                drilldown.onDataSet()
-            }
-        default:
-            break
-        }
-        
     }
     
     override func onFocus() {
@@ -343,7 +257,7 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
                     }
                     script9+="]}]}';var w = \(viewSize.width); var h = \(viewSize.height);  renderChart(data7, w, h);"
                     
-                    //Log(script9)
+                    log.verbose(script9)
                     
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         self.webView.evaluateJavaScript(script9, completionHandler: nil)
@@ -415,7 +329,6 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
             }
             else
             {
-                Log("onNoDataState()")
                 onNoDataState()
             }
         }
@@ -638,8 +551,6 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
         var posValue = 0.0
         var negValue = 0.0
         
-        let dateWeAreLookingFor = dateFormat.stringFromDate(givenDate)
-        
         for r in 0..<self.chartData.count{
             var currentDate = NSDate()
             if(!foundBiggerDate){
@@ -668,7 +579,7 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
     func redrawStackedBarWithNewRange(lowerIndex: Int, upperIndex: Int){
         var firstIndex = 0
         while firstIndex < self.chartData.count && dateRange[lowerIndex] != self.chartData[firstIndex][0] {
-            firstIndex++
+            firstIndex += 1
         }
         
         let script9 = self.makeScriptForStackedBar(firstIndex, upperIndex: upperIndex)
@@ -716,7 +627,7 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
                     script9+="]}'; var w = \(viewSize.width); var h = \(viewSize.height); renderChart(myData,w,h);"
                     
                     // For testing
-                    script9 = "var myData='{\"nodes\":[    {\"name\":\"Myriel\",\"value\":52,\"group\":1},    {\"name\":\"Labarre\",\"value\":5,\"group\":2},    {\"name\":\"Valjean\",\"value\":17,\"group\":2},    {\"name\":\"Mme.deR\",\"value\":55,\"group\":2},    {\"name\":\"Mme.deR\",\"value\":17,\"group\":2},    {\"name\":\"Isabeau\",\"value\":44,\"group\":2},    {\"name\":\"Mme.deR\",\"value\":17,\"group\":2},    {\"name\":\"Isabeau\",\"value\":22,\"group\":2},    {\"name\":\"Isabeau\",\"value\":17,\"group\":2},    {\"name\":\"Gervais\",\"value\":33,\"group\":2}  ],  \"links\":[    {\"source\":0,\"target\":1,\"distance\":33},    {\"source\":0,\"target\":2,\"distance\":22},    {\"source\":0,\"target\":3,\"distance\":22},    {\"source\":0,\"target\":4,\"distance\":11},    {\"source\":0,\"target\":5,\"distance\":22},    {\"source\":0,\"target\":6,\"distance\":22},    {\"source\":0,\"target\":7,\"distance\":43},    {\"source\":0,\"target\":8,\"distance\":22},    {\"source\":0,\"target\":9,\"distance\":22}  ]}'; var w = \(viewSize.width); var h = \(viewSize.height); renderChart(myData,w,h);";
+//                    script9 = "var myData='{\"nodes\":[    {\"name\":\"Myriel\",\"value\":52,\"group\":1},    {\"name\":\"Labarre\",\"value\":5,\"group\":2},    {\"name\":\"Valjean\",\"value\":17,\"group\":2},    {\"name\":\"Mme.deR\",\"value\":55,\"group\":2},    {\"name\":\"Mme.deR\",\"value\":17,\"group\":2},    {\"name\":\"Isabeau\",\"value\":44,\"group\":2},    {\"name\":\"Mme.deR\",\"value\":17,\"group\":2},    {\"name\":\"Isabeau\",\"value\":22,\"group\":2},    {\"name\":\"Isabeau\",\"value\":17,\"group\":2},    {\"name\":\"Gervais\",\"value\":33,\"group\":2}  ],  \"links\":[    {\"source\":0,\"target\":1,\"distance\":33},    {\"source\":0,\"target\":2,\"distance\":22},    {\"source\":0,\"target\":3,\"distance\":22},    {\"source\":0,\"target\":4,\"distance\":11},    {\"source\":0,\"target\":5,\"distance\":22},    {\"source\":0,\"target\":6,\"distance\":22},    {\"source\":0,\"target\":7,\"distance\":43},    {\"source\":0,\"target\":8,\"distance\":22},    {\"source\":0,\"target\":9,\"distance\":22}  ]}'; var w = \(viewSize.width); var h = \(viewSize.height); renderChart(myData,w,h);";
 
                     
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in

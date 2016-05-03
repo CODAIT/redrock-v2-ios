@@ -6,7 +6,9 @@ Backend: [https://github.com/SparkTC/redrock](https://github.com/SparkTC/redrock
 
 #### Getting started
 
-0. Setup that backend
-1. Open the project with Xcode 7.1.1
-2. Change the `serverAddress` in `Config.swift` to point to the backend
-3. Run the project on a Simulator or iPad
+0. Setup the backend
+1. Install [Carthage](https://github.com/Carthage/Carthage).
+2. From the project directory run `carthage bootstrap`
+3. Open the project with Xcode 7.3
+4. Change the `serverAddress` in `Config.swift` to point to the backend
+5. Run the project on a Simulator or iPad

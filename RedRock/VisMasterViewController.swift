@@ -23,6 +23,7 @@
 */
 
 import UIKit
+import SwiftyJSON
 
 enum VisTypes {
     case TreeMap
@@ -51,17 +52,7 @@ class VisMasterViewController: UIViewController {
                 return
             }
             
-            switch Config.appState {
-            case .Historic:
-                onDataSet()
-            case .Live:
-                guard oldValue != nil else {
-                    onDataSet()
-                    break
-                }
-                // Skip reloading the webview
-                transformData()
-            }
+            onDataSet()
         }
     }
     var chartData: [[String]] = [[String]]()
@@ -74,11 +65,9 @@ class VisMasterViewController: UIViewController {
         }
     }
     var searchText: String = ""
-    var playBarController: PlayBarViewController!
     
-    var visHolderChildren = [VisHolderViewController]()
     
-    // UI
+    // MARK: - UI
     var visHolderView: UIView!
     var activityIndicator: UIActivityIndicatorView!
     var messageLabel: UILabel!
@@ -114,19 +103,19 @@ class VisMasterViewController: UIViewController {
     }
     
     func onDataSet() {
-        Log("Override onDataSet")
+        log.debug("Override onDataSet")
     }
     
     func onFocus() {
-        Log("Override onFocus")
+        log.debug("Override onFocus")
     }
     
     func onBlur() {
-        Log("Override onBlur")
+        log.debug("Override onBlur")
     }
     
     func transformData() {
-        Log("Override transformData")
+        log.debug("Override transformData")
     }
     
     // MARK: - Display states
@@ -186,24 +175,8 @@ class VisMasterViewController: UIViewController {
         errorDescription = nil
         json = nil
         onLoadingState()
-        removeAllVisHolderChildren()
     }
     
-    func addVisHolderController(vc: VisHolderViewController) {
-        addChildViewController(vc)
-        visHolderView.addSubview(vc.view)
-        vc.didMoveToParentViewController(self)
-        visHolderChildren.append(vc)
-        
-        addConstrainsToCenterInView(vc.view)
-    }
-    
-    func removeAllVisHolderChildren() {
-        for vh in visHolderChildren {
-            vh.removeView()
-        }
-        visHolderChildren.removeAll()
-    }
     
     // MARK: - UI Utils
     
@@ -285,7 +258,8 @@ class VisMasterViewController: UIViewController {
         var tableData = Array(count: row_cnt!, repeatedValue: Array(count: col_cnt!, repeatedValue: ""))
         
         // populates the 2d array
-        for (row, rowJson): (String, JSON) in json[containerName] {
+        let tableJson = json[containerName]
+        for (row, rowJson): (String, JSON) in tableJson {
             for (col, cellJson): (String, JSON) in rowJson {
                 let r: Int = Int(row)!
                 let c: Int = Int(col)!

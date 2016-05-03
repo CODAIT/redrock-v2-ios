@@ -30,8 +30,9 @@ class VisFactory {
         switch type {
         case .TreeMap, .CirclePacking, .ForceGraph, .CommunityGraph, .StackedBar, .StackedBarDrilldownCirclePacking, .SidewaysBar:
             return VisWebViewController(type: type)
-        case .TimeMap:
-            return VisNativeViewController(type: type)
+        default:
+            log.error("Tried to create unknown VisTyle: \(type)")
+            return nil
         }
     }
 }

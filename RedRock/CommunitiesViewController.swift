@@ -1,5 +1,5 @@
 //
-//  SearchViewController.swift
+//  CommunitiesViewController.swift
 //  RedRock
 //
 //  Created by Jonathan Alter on 5/2/16.
@@ -7,7 +7,7 @@
 //
 
 /**
- * (C) Copyright IBM Corp. 2015, 2015
+ * (C) Copyright IBM Corp. 2016, 2016
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,12 +25,31 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
+class CommunitiesViewController: UIViewController {
 
+    var searchTerm: String = "#spark"
+    var wv: VisMasterViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        // Setup Vis
+        wv = VisFactory.visualizationControllerForType(VisTypes.ForceGraph)!
+        wv!.view.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
+        
+        self.addChildViewController(wv!)
+        self.view.addSubview((wv?.view)!)
+        wv?.didMoveToParentViewController(self)
+        
+        // Make request
+        Network.sharedInstance.findSynonyms(searchTerm) { (json, error) in
+            guard self.wv != nil else {
+                log.warning("Network response can not find webview to display data")
+                return
+            }
+            
+            self.wv?.json = json
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,6 +57,9 @@ class SearchViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        wv?.onBlur()
+    }
 
     /*
     // MARK: - Navigation
