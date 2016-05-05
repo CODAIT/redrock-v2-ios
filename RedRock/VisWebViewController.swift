@@ -601,7 +601,8 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
                 
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
                     
-                    var script9 = "var myData = '{\"nodes\": [ {\"name\":\"\(self.searchText)\",\"value\":\(self.chartData[0][2]),\"group\":1}, " //the search text just arbitrarily takes the value of the first data point as its value
+                    let searchTermCount = self.json["searchTermCount"].floatValue
+                    var script9 = "var myData = '{\"nodes\": [ {\"name\":\"\(self.searchText)\",\"value\":\(searchTermCount),\"group\":1}, "
                     for r in 0..<self.self.chartData.count{
                         script9+="{\"name\": \""
                         script9+=self.chartData[r][0]
