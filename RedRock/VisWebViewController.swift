@@ -55,6 +55,13 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
     
     var webView: WKWebView! = nil
     
+    var viewSize: CGSize {
+        let statusSize = UIApplication.sharedApplication().statusBarFrame.size
+        let navSize = self.parentViewController?.navigationController?.navigationBar.frame.size
+        let viewSize = self.view.bounds.size
+        return CGSize.init(width: viewSize.width, height: viewSize.height - (navSize?.height)! - statusSize.height)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         webView = createWKWebViewWithConfigurationForCallback()
@@ -199,7 +206,7 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
     func transformDataForTreemapping(){
         onLoadingState()
         
-        let viewSize = self.view.bounds.size
+        let viewSize = self.viewSize
         
         let treemapData = json!["profession"].description
         var treemapDataTrimmed : String
@@ -228,7 +235,7 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
                 // Reorder Circle Packing Data
                 self.chartData.sortInPlace({$0[2] < $1[2]})
                 
-                let viewSize = self.view.bounds.size
+                let viewSize = self.viewSize
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
                     var script9 = "var data7 = '{\"name\": \" \",\"children\": ["
                     
@@ -382,7 +389,7 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
                 // Reorder Circle Packing Data
                 self.chartData.sortInPlace({$0[1] < $1[1]})
                 
-                let viewSize = self.view.bounds.size
+                let viewSize = self.viewSize
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
                     var script9 = "var data7 = '{\"name\": \" \",\"children\": ["
                     
@@ -507,7 +514,7 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
     
     func makeScriptForStackedBar(firstIndex: Int, upperIndex: Int?=nil) -> String {
         var script9 = "var myData = [{\"key\": \"Tweet Count\", \"values\": ["
-        let viewSize = self.view.bounds.size
+        let viewSize = self.viewSize
         
         for r in firstIndex..<self.chartData.count{
             if (self.dateRange.indexOf(self.chartData[r][0]) == nil)
@@ -597,7 +604,7 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
             onLoadingState()
             if self.chartData.count > 0
             {
-                let viewSize = self.view.bounds.size
+                let viewSize = self.viewSize
                 
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
                     
@@ -674,7 +681,7 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
                 
                 //var data = '{"nodes": [{"label":"Myriel","id":1,"degree":7,"community":1,"x":5,"y":5}, {"label":"Hebert","id":2,"degree":2,"community":1,"x":20,"y":5}, {"label":"Scads","id":3,"degree":5,"community":2,"x":23,"y":22.1}], "links":[ {"source":1,"target":0,"weight":2.0}, {"source":2,"target":4,"weight":5.0}, {"source":4,"target":1,"weight":1.0} ]}'
                 
-                let viewSize = self.view.bounds.size
+                let viewSize = self.viewSize
                 
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
 
