@@ -41,6 +41,8 @@ class RelatedTermsViewController: UIViewController {
         self.view.addSubview((wv?.view)!)
         wv?.didMoveToParentViewController(self)
         
+        wv?.searchText = searchTerm
+        
         // Make request
         Network.sharedInstance.findSynonyms(searchTerm) { (json, error) in
             guard self.wv != nil else {
