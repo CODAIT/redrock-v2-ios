@@ -68,7 +68,7 @@ class Network
         }
         
         var parameters = Dictionary<String,String>()
-        parameters["count"] = "10"
+        parameters["count"] = "7"
         let req = self.createRequest(Config.serverTopTerms, paremeters: parameters)
         executeRequest(req, callback: callback)
     }
