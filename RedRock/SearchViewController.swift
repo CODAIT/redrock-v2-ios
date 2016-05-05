@@ -30,6 +30,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     
     var hashtags = JSON(Array())
     var handles = JSON(Array())
+    var searchTerm: String?
     
     @IBOutlet weak var searchField: UITextField!
     @IBOutlet weak var searchButton: UIButton!
@@ -39,13 +40,12 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // TODO: Add tapping on trending item searches by that item
-//        Network.sharedInstance.findTopTerms { (json, error) in
-//            self.hashtags = json!["hashtags"]
-//            self.handles = json!["handles"]
-//            self.leftTableView.reloadData()
-//            self.rightTableView.reloadData()
-//        }
+        Network.sharedInstance.findTopTerms { (json, error) in
+            self.hashtags = json!["hashtags"]
+            self.handles = json!["handles"]
+            self.leftTableView.reloadData()
+            self.rightTableView.reloadData()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -57,19 +57,15 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     // MARK: - Navigation
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-        
-        let searchTerm = (searchField.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))!
-        (segue.destinationViewController as! RelatedTermsViewController).searchTerm = searchTerm
+        (segue.destinationViewController as! RelatedTermsViewController).searchTerm = searchTerm!
     }
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        // Does not get called on table click, only on searchButton click and return
         
-        var searchText = self.searchField.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-        searchText = searchText.stringByReplacingOccurrencesOfString(" ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        searchTerm = cleanSearchText(self.searchField.text!)
         
-        if searchText == "" {
+        if searchTerm == "" {
             let animation = CABasicAnimation(keyPath: "position")
             animation.duration = 0.07
             animation.repeatCount = 2
@@ -91,21 +87,24 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         
         let label = cell?.viewWithTag(1) as! UILabel
         
-        let list = tableView == rightTableView ? hashtags : handles
+        let list = listForTable(tableView)
         label.text = list[indexPath.row]["term"].stringValue
         
         return cell!
     }
 
     func  tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let list = tableView == rightTableView ? hashtags : handles
+        let list = listForTable(tableView)
         return list.count
     }
     
     // MARK: - UITableViewDelegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let list = listForTable(tableView)
+        searchTerm = list[indexPath.row]["term"].stringValue
         performSegueWithIdentifier("showRelatedTerms", sender: nil)
+        tableView.deselectRowAtIndexPath(indexPath, animated: false)
     }
     
     // MARK: - UITextFieldDelegate
@@ -115,5 +114,16 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
             performSegueWithIdentifier("showRelatedTerms", sender: self.searchField)
         }
         return true
+    }
+    
+    // MARK: - Utils
+    
+    func listForTable(tableView: UITableView) -> JSON {
+        return tableView == rightTableView ? hashtags : handles
+    }
+    
+    func cleanSearchText(text: String) -> String {
+        let searchText = text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        return searchText.stringByReplacingOccurrencesOfString(" ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
     }
 }
