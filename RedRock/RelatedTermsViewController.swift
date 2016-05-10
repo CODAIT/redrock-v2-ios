@@ -72,7 +72,8 @@ class RelatedTermsViewController: UIViewController {
         // Pass the selected object to the new view controller.
         
         // Pass along the search terms
-        let searchTerms = (wv?.chartData)!.map({"\($0[0])"}).joinWithSeparator(",")
+        var searchTerms = (wv?.chartData)!.map({"\($0[0])"}).joinWithSeparator(",")
+        searchTerms = searchTerm + "," + searchTerms
         (segue.destinationViewController as! CommunitiesViewController).searchTerms = searchTerms
     }
 
