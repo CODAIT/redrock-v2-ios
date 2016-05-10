@@ -54,7 +54,7 @@ class Network
         
         var parameters = Dictionary<String,String>()
         parameters["searchterm"] = searchText.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
-        parameters["count"] = "10"
+        parameters["count"] = "20"
         let req = self.createRequest(Config.serverSynonyms, paremeters: parameters)
         executeRequest(req, callback: callback)
     }
