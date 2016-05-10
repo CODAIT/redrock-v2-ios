@@ -110,8 +110,10 @@ function renderChart(data, w, h, minX, minY, maxX, maxY) {
 	.attr("r", 5)
 	.style("fill", function(d) {
 		return returnColor(parentColor(d.community),2);
-	});
-	
+    }).on("click", function(d) {
+        window.webkit.messageHandlers.callbackHandler.postMessage({action: "showdetails", chartname: "communitygraph", community: d.community});
+    });
+
 	//console.log(numberAfterFilter);
        
 

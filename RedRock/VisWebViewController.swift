@@ -78,6 +78,8 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
                 case "reload":
                     self.clean()
                     reloadChart(body)
+                case "showdetails":
+                    self.parentViewController!.performSegueWithIdentifier("communityDetails", sender: body)
                 default:
                     log.error("Unknown action [\(action)] sent from web view")
                 }

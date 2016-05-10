@@ -222,7 +222,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Details"/>
                                 <connections>
-                                    <segue destination="y3F-dk-ilK" kind="show" id="4rW-xk-a9E"/>
+                                    <segue destination="y3F-dk-ilK" kind="show" identifier="communityDetails" id="4rW-xk-a9E"/>
                                 </connections>
                             </button>
                         </barButtonItem>

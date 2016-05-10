@@ -27,7 +27,8 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
-    var searchTerm: String = "test"
+    var searchTerms: String? // The search terms used to generate the community graph
+    var communityId: String? // The id of the community
     var wordCloudWV: VisMasterViewController?
     var sentimentWV: VisMasterViewController?
     
@@ -54,7 +55,7 @@ class DetailViewController: UIViewController {
         sentimentWV?.didMoveToParentViewController(self)
         
         // Make request
-        Network.sharedInstance.findSynonyms(searchTerm) { (json, error) in
+        Network.sharedInstance.findSynonyms(searchTerms!) { (json, error) in
             guard self.wordCloudWV != nil else {
                 log.warning("Network response can not find webview to display data")
                 return
