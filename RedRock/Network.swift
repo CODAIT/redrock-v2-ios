@@ -88,6 +88,20 @@ class Network
         executeRequest(req, callback: callback)
     }
     
+    // Community Details: http://spark11:16666/tiara/getcommunitiesdetails?searchterms=%23trump,%23cruz,%23duckingdonald,%23boycottfoxnews,%23iowa,%23caucusfortrump,%23iacaucus,%23trump2,%23makeamericagreatagain,%23familyvalues,%23teamtrump,%23iowa4trump,%23women4trump,%23iowacaucus,%23ia,%23trump2016,%23votetrump,%23gop,%23yuge,%23trumptrain,%23makeameric
+    func getCommunityDetails(searchText: String, callback: NetworkRequestResponse) {
+        if Config.useDummyData {
+            let path = "response_communitydetails"
+            dispatchRequestForResource(path, callback: callback)
+            return
+        }
+        
+        var parameters = Dictionary<String,String>()
+        parameters["searchterms"] = searchText.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+        let req = self.createRequest(Config.serverCommunityDetails, paremeters: parameters)
+        executeRequest(req, callback: callback)
+    }
+    
     
     //MARK: Server
     

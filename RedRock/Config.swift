@@ -38,6 +38,7 @@ class Config {
     static let serverSynonyms = "tiara/getsynonyms"
     static let serverTopTerms = "tiara/gettopterms"
     static let serverCommunities = "tiara/getcommunities"
+    static let serverCommunityDetails = "tiara/getcommunitiesdetails"
     
     // MARK: - Colors
     static let darkBlueColor = UIColor(rgba: "#1C3648") // Dark Blue
