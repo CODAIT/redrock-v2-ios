@@ -40,7 +40,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        Network.sharedInstance.findTopTerms { (json, error) in
+        Network.sharedInstance.getTopTerms { (json, error) in
             self.hashtags = json!["hashtags"]
             self.handles = json!["handles"]
             self.leftTableView.reloadData()

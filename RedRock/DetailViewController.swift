@@ -55,7 +55,7 @@ class DetailViewController: UIViewController {
         sentimentWV?.didMoveToParentViewController(self)
         
         // Make request
-        Network.sharedInstance.findSynonyms(searchTerms!) { (json, error) in
+        Network.sharedInstance.getSynonyms(searchTerms!) { (json, error) in
             guard self.wordCloudWV != nil else {
                 log.warning("Network response can not find webview to display data")
                 return

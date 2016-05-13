@@ -97,7 +97,7 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
             switch name as! String {
             case "forcenode":
                 let term = dict.valueForKey("name") as! String
-                Network.sharedInstance.findSynonyms(term) { (json, error) in
+                Network.sharedInstance.getSynonyms(term) { (json, error) in
                     self.json = json
                 }
             default:

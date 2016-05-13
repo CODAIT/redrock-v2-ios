@@ -42,7 +42,7 @@ class CommunitiesViewController: UIViewController {
         wv?.didMoveToParentViewController(self)
         
         // Make request
-        Network.sharedInstance.findCommunities(searchTerms) { (json, error) in
+        Network.sharedInstance.getCommunities(searchTerms) { (json, error) in
             guard self.wv != nil else {
                 log.warning("Network response can not find webview to display data")
                 return

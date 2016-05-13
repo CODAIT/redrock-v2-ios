@@ -42,7 +42,7 @@ class Network
     // MARK: Call Requests
     
     // Synonyms: http://spark11:16666/tiara/getsynonyms?searchterm=%23love&count=10
-    func findSynonyms(searchText: String, callback: NetworkRequestResponse) {
+    func getSynonyms(searchText: String, callback: NetworkRequestResponse) {
         if Config.useDummyData {
             var path = "response_synonyms"
             if searchText.containsString("#") {
@@ -60,7 +60,7 @@ class Network
     }
     
     // Top Terms: http://spark11:16666/tiara/gettopterms?count=20
-    func findTopTerms(callback: NetworkRequestResponse) {
+    func getTopTerms(callback: NetworkRequestResponse) {
         if Config.useDummyData {
             let path = "response_topterms"
             dispatchRequestForResource(path, callback: callback)
@@ -74,7 +74,7 @@ class Network
     }
     
     // Graph: http://spark11:16666/tiara/getcommunities?searchterms=%23love,%23god&get3d=false
-    func findCommunities(searchText: String, callback: NetworkRequestResponse) {
+    func getCommunities(searchText: String, callback: NetworkRequestResponse) {
         if Config.useDummyData {
             let path = "response_communities"
             dispatchRequestForResource(path, callback: callback)

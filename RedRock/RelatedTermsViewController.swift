@@ -44,7 +44,7 @@ class RelatedTermsViewController: UIViewController {
         wv?.searchText = searchTerm
         
         // Make request
-        Network.sharedInstance.findSynonyms(searchTerm) { (json, error) in
+        Network.sharedInstance.getSynonyms(searchTerm) { (json, error) in
             guard self.wv != nil else {
                 log.error("Network response can not find webview to display data")
                 return
