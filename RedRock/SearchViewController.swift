@@ -41,6 +41,10 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         super.viewDidLoad()
         
         Network.sharedInstance.getTopTerms { (json, error) in
+            guard json != nil && error == nil else {
+                log.debug("getTopTerms error: \(error)")
+                return
+            }
             self.hashtags = json!["hashtags"]
             self.handles = json!["handles"]
             self.leftTableView.reloadData()
