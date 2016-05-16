@@ -217,7 +217,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Communities" id="Gjm-DZ-s8t">
                         <barButtonItem key="rightBarButtonItem" style="plain" id="Upa-M3-0hj">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="uew-Mz-UHB">
+                            <button key="customView" hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="uew-Mz-UHB">
                                 <rect key="frame" x="447" y="7" width="133" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Details"/>
