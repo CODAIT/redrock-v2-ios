@@ -24,6 +24,7 @@
 
 import UIKit
 import WebKit
+import SwiftyJSON
 
 class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNavigationDelegate, WKScriptMessageHandler {
     
@@ -787,63 +788,42 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
     }
     
     func transformDataForPieChart(){
-        func loadData() {
+        func loadData(data: JSON) {
             onLoadingState()
-            if self.chartData.count > 0
+            if data.count > 0
             {
                 let viewSize = self.viewSize
+                let communitySentiment = data[self.communityId!]
                 
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-                    
-                    //let searchTermCount = self.json["searchTermCount"].floatValue
-                    //let searchTerm = self.json["searchTerm"].stringValue
-                    
-                    var script9 = "var myData = [{\"label\": \"Positive\", \"value\": \(self.chartData[0][0])}, {\"label\": \"Negative\", \"value\": \(self.chartData[0][1])}, {\"label\": \"Neutral\", \"value\": \(self.chartData[0][2])}];"
-                    
-                    log.debug(script9)
-                    
-                    //var script9 = "var myData = [{\"label\": \"Positive\", \"value\": \(11)}, {\"label\": \"Negative\", \"value\": \(22)}, {\"label\": \"Neutral\", \"value\": \(44)}];"
-                    
-                    script9+=" var w = \(viewSize.width); var h = \(viewSize.height); renderChart(myData,w,h);"
-                    
-                    // For testing
-                    //                    script9 = "var myData='{\"nodes\":[    {\"name\":\"Myriel\",\"value\":52,\"group\":1},    {\"name\":\"Labarre\",\"value\":5,\"group\":2},    {\"name\":\"Valjean\",\"value\":17,\"group\":2},    {\"name\":\"Mme.deR\",\"value\":55,\"group\":2},    {\"name\":\"Mme.deR\",\"value\":17,\"group\":2},    {\"name\":\"Isabeau\",\"value\":44,\"group\":2},    {\"name\":\"Mme.deR\",\"value\":17,\"group\":2},    {\"name\":\"Isabeau\",\"value\":22,\"group\":2},    {\"name\":\"Isabeau\",\"value\":17,\"group\":2},    {\"name\":\"Gervais\",\"value\":33,\"group\":2}  ],  \"links\":[    {\"source\":0,\"target\":1,\"distance\":33},    {\"source\":0,\"target\":2,\"distance\":22},    {\"source\":0,\"target\":3,\"distance\":22},    {\"source\":0,\"target\":4,\"distance\":11},    {\"source\":0,\"target\":5,\"distance\":22},    {\"source\":0,\"target\":6,\"distance\":22},    {\"source\":0,\"target\":7,\"distance\":43},    {\"source\":0,\"target\":8,\"distance\":22},    {\"source\":0,\"target\":9,\"distance\":22}  ]}'; var w = \(viewSize.width); var h = \(viewSize.height); renderChart(myData,w,h);";
-                    
-                    //self.communityId
-                    
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        self.webView.evaluateJavaScript(script9, completionHandler: nil)
-                        self.onSuccessState()
-                    })
-                })
+                if communitySentiment == nil {
+                    onNoDataState()
+                    return
+                }
+                
+                var script9 = "var myData = [{\"label\": \"Positive\", \"value\": \(communitySentiment[0])}, {\"label\": \"Negative\", \"value\": \(communitySentiment[1])}, {\"label\": \"Neutral\", \"value\": \(communitySentiment[2])}];"
+                log.verbose(script9)
+                
+                //var script9 = "var myData = [{\"label\": \"Positive\", \"value\": \(11)}, {\"label\": \"Negative\", \"value\": \(22)}, {\"label\": \"Neutral\", \"value\": \(44)}];"
+                script9+=" var w = \(viewSize.width); var h = \(viewSize.height); renderChart(myData,w,h);"
+                
+                self.webView.evaluateJavaScript(script9, completionHandler: nil)
+                self.onSuccessState()
                 
             }
             else {
                 onNoDataState()
             }
-            
         }
         
-        let containerName = "communitydetails" // name of container for data
+        let comDetails = self.json["communitydetails"]
+        let comSentiment = comDetails["sentiment"]
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-            
-            let data1 = self.json[containerName]
-            
-            let data2 = data1["sentiment"]
-            
-            let data3 = self.returnArrayOfData(3, containerName: self.communityId!, json: data2)
-            
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                if(data3 != nil){
-                    self.chartData = data3!
-                    loadData()
-                }
-                else{
-                    self.errorDescription = Config.serverErrorMessage
-                }
-            })
-        })
+        if(comSentiment != nil){
+            loadData(comSentiment)
+        } else {
+            self.errorDescription = Config.serverErrorMessage
+        }
+        
     }
     
     func transformDataForWordCloud(){
