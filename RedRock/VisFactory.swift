@@ -28,7 +28,8 @@ class VisFactory {
 
     class func visualizationControllerForType(type: VisTypes) -> VisMasterViewController? {
         switch type {
-        case .TreeMap, .CirclePacking, .ForceGraph, .CommunityGraph, .StackedBar, .StackedBarDrilldownCirclePacking, .SidewaysBar:
+        case .TreeMap, .CirclePacking, .ForceGraph, .CommunityGraph, .StackedBar,
+             .StackedBarDrilldownCirclePacking, .SidewaysBar, .PieChart, .WordCloud:
             return VisWebViewController(type: type)
         default:
             log.error("Tried to create unknown VisTyle: \(type)")

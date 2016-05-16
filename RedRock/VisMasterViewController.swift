@@ -34,6 +34,8 @@ enum VisTypes {
     case StackedBarDrilldownCirclePacking
     case TimeMap
     case SidewaysBar
+    case PieChart
+    case WordCloud
 }
 
 @objc

@@ -39,7 +39,7 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         
         // Setup Vis
-        wordCloudWV = VisFactory.visualizationControllerForType(VisTypes.ForceGraph)!
+        wordCloudWV = VisFactory.visualizationControllerForType(VisTypes.WordCloud)!
         wordCloudWV!.view.frame = CGRect(x: 0, y: 0, width: leftView.bounds.width, height: leftView.bounds.height)
         
         self.addChildViewController(wordCloudWV!)
@@ -47,7 +47,7 @@ class DetailViewController: UIViewController {
         wordCloudWV?.didMoveToParentViewController(self)
         
         // Setup Vis
-        sentimentWV = VisFactory.visualizationControllerForType(VisTypes.ForceGraph)!
+        sentimentWV = VisFactory.visualizationControllerForType(VisTypes.PieChart)!
         sentimentWV!.view.frame = CGRect(x: 0, y: 0, width: rightView.bounds.width, height: rightView.bounds.height)
         
         self.addChildViewController(sentimentWV!)
@@ -55,6 +55,9 @@ class DetailViewController: UIViewController {
         sentimentWV?.didMoveToParentViewController(self)
         
         // Make request
+        
+        // TODO: replace the line below with this line when changing the web views
+        // Network.sharedInstance.getCommunityDetails(searchTerms!) { (json, error) in
         Network.sharedInstance.getSynonyms(searchTerms!) { (json, error) in
             guard self.wordCloudWV != nil else {
                 log.warning("Network response can not find webview to display data")
