@@ -1,6 +1,13 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
-<style>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link href="nv.d3.css" rel="stylesheet" type="text/css">
+    <script src="d3.min.js" charset="utf-8"></script>
+    <script src="nv.d3.js"></script>
+    <script src="stream_layers.js"></script>
+
+    <style>
 
 /**
  * (C) Copyright IBM Corp. 2015, 2015
@@ -18,136 +25,94 @@
  * limitations under the License.
  *
  */
+        *{
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+        }
 
-*{
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
+        text {
+            font: 12px sans-serif;
+        }
+    
+        svg {
+            display: block;
+        }
+        html, body, #chart1, svg {
+            margin-top:  15px;
+            padding-top: 5px;
+            padding-left: 0px;
+            height:  96%;
+        }
+
+        .tick line {
+            opacity: 0 !important;
+        }
+
+    .nvd3 .nv-groups path.nv-line {
+        fill: none;
+        stroke-width: 0px;
+    }
+
+    .nvd3 .nv-axis.nv-x path.domain {
+  stroke-opacity: 0;
 }
 
-.node {
-  fill: rgba(92,195,184,1.0);
-}
+.nvd3 .nv-axis path {
+       fill: none;
+    stroke: rgba(0, 0, 0, 0.32);
+    stroke-opacity: .75;
+    shape-rendering: crispEdges;
+ }
 
-.link {
-  stroke: #dee8e8;
-  stroke-opacity: .6;
-}
-
-</style>
+ text{
+        fill: rgb(171, 171, 171);
+        font-weight:normal !important;
+ }
+    circle {
+    opacity: 0.8;
+    }
+    </style>
+</head>
 <body>
-
-<script src="d3.min.js" charset="utf-8"></script>
+<div id="chart1" class='with-3d-shadow with-transitions'>
+    <svg id="canvas"></svg>
+</div>
 <script>
 
-    var force;
+    var chartData = null;
+    var chart = null;
+    var toggle = true;
 
-function renderChart(data, w, h) {
+    var width = 0;
+    var height = 0;
 
-var optimizedWidth = 1024
+    function renderChart(data, w, h) {
 
-var shrinkConstant = w/optimizedWidth
+        width = w
+        height = h
 
-d3.select("svg").remove(); //clear the chart before starting
+        nv.addGraph(function() {
+		
+			var chart = nv.models.pieChart()
+			  .x(function(d) {return d.label })
+			  .y(function(d) {return d.value })
+			  .showLabels(true);
+		
+            d3.select('#chart1 svg')
+            .datum(data)
+            .call(chart);
 
-var resizeConstant = 1.43
+            nv.utils.windowResize(chart.update);
 
-var width = w * resizeConstant,
-height = h * resizeConstant;
+            return chart;
+        });
 
-var color = d3.scale.category20();
-
-force = d3.layout.force()
-.charge(-1200)
-.linkDistance(10)
-.size([width, height]);
-
-var svg = d3.select("body").append("svg")
-.attr("width", width)
-.attr("height", height);
-
-
-var graph = JSON.parse(data);
-
-var maxNodeSize = d3.max(graph.nodes, function(d) {return d.value;});
-
-var maxLinkLength = d3.max(graph.links, function(d){return d.distance;});
-var minLinkLength = d3.min(graph.links, function(d){return d.distance;});
-
-var radiusScale = d3.scale.linear().domain([0,maxNodeSize]).range([10,65 * resizeConstant * shrinkConstant]);
-
-var linkScale = d3.scale.linear().domain([minLinkLength,maxLinkLength]).range([45,(210*resizeConstant*resizeConstant*shrinkConstant)]);
-
-  force
-      .nodes(graph.nodes)
-      .links(graph.links)
-      .linkDistance(function(d) { return linkScale(d.distance);})
-      .start();
-
-      n = 2000;
-      for (var i = 0; i < n; ++i) force.tick();
-
-force
-.start();
-
-  var link = svg.selectAll(".link")
-      .data(graph.links)
-    .enter().append("line")
-      .attr("class", "link")
-      .attr("stroke-width",5)
-      .style("stroke-width", function(d) { return Math.sqrt(radiusScale(d.value)); })
-      ;
-
-  var node = svg.selectAll(".node")
-      .data(graph.nodes)
-    .enter().append("g")
-    .attr("class", "node")
-    .call(force.drag);
-
-    node.append("circle")
-    .attr("stroke","rgba(0,0,0,0)")
-    .attr("r", function(d){return radiusScale(d.value);})
-    .attr("fill", function(d) {
-          if(d.name.charAt(0) == '#'){
-            return "#00B39F";
-          }
-          else if(d.name.charAt(0) == '@'){
-            return "#325C80";
-          }
-          else{
-            return "#edc01b";
-          }
-        }
-      )
-    .on("click", function(d) {
-        window.webkit.messageHandlers.callbackHandler.postMessage({action: "reload", chartname: "forcenode", name: d.name});
-       })
-
-    node.append("text")
-    .attr("x", function(d){return 4+radiusScale(d.value);})
-    .attr("dy", ".35em")
-    .attr("fill", "black")
-    .attr("font-family", "Helvetica")
-    .text(function(d) {return d.name;});
-
-
-  force.on("tick", function() {
-    // bound the links according to their radius and the screen bounds
-    link.attr("x1", function(d) { return Math.max(0,Math.min(width,d.source.x)); })
-        .attr("y1", function(d) { return Math.max(0,Math.min(height,d.source.y)); })
-        .attr("x2", function(d) { return Math.max(0,Math.min(width,d.target.x)); })
-        .attr("y2", function(d) { return Math.max(0,Math.min(height,d.target.y)); });
-
-        // bound the nodes according to their radius and the screen bounds
-        node.attr("transform", function(d) { return "translate(" + Math.max(0+radiusScale(d.value),Math.min(width-70-radiusScale(d.value),d.x)) + "," + Math.max(0+radiusScale(d.value),Math.min(height-radiusScale(d.value),d.y)) + ")"; });
-  });
-
-};
-
-function startAnimation(){
-    force.start();
-}
-
-function stopAnimation(){
-    force.stop();
-}
-
-</script>
+    }
+		
+    //var data7 = [{"label": "A", "value": 20}, {"label": "B", "value": 33}, {"label": "C", "value": 45}];
+	
+	//renderChart(data7, 800.0, 600.0);
+	
+	
+    </script>
+</body>
+</html>
