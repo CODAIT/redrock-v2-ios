@@ -37,7 +37,14 @@ class Network
     private var requestTotal = 0
     private var error = false
     private var startTime = CACurrentMediaTime()
+    private var cachedCommunityDetailsJSON: JSON?
     
+    // MARK: Cache Management
+    
+    func clearCommunityDetailsCache() {
+        cachedCommunityDetailsJSON = nil
+        log.verbose("Community Details cache cleared")
+    }
     
     // MARK: Call Requests
     
@@ -96,10 +103,25 @@ class Network
             return
         }
         
+        if Config.cacheCommunityDetails && self.cachedCommunityDetailsJSON != nil {
+            log.verbose("Using cached Community Details")
+            callCallbackAfterDelay(self.cachedCommunityDetailsJSON, error: nil, delayInSeconds: Config.cahceCommunityDetailsDelay, callback: callback)
+            return
+        }
+        
+        func callbackWithCaching(json: JSON?, error: NSError?) {
+            if Config.cacheCommunityDetails {
+                self.cachedCommunityDetailsJSON = json
+                log.verbose("Caching Community Details")
+            }
+            callback(json: json, error: error)
+        }
+        
         var parameters = Dictionary<String,String>()
         parameters["searchterms"] = searchText.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+        parameters["count"] = "20"
         let req = self.createRequest(Config.serverCommunityDetails, paremeters: parameters)
-        executeRequest(req, callback: callback)
+        executeRequest(req, callback: callbackWithCaching)
     }
     
     
@@ -251,8 +273,8 @@ class Network
         
     }
     
-    func callCallbackAfterDelay(json: JSON?, error: NSError?, callback: NetworkRequestResponse) {
-        let delay = Config.dummyDataDelay * Double(NSEC_PER_SEC)
+    func callCallbackAfterDelay(json: JSON?, error: NSError?, delayInSeconds: Double = Config.dummyDataDelay, callback: NetworkRequestResponse) {
+        let delay = delayInSeconds * Double(NSEC_PER_SEC)
         let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
         dispatch_after(time, dispatch_get_main_queue()) {
             Network.waitingForResponse = false

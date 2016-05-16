@@ -30,6 +30,10 @@ class Config {
     static let skipSearchScreen = false // Default: false
     static let useDummyData = false // Default: false
     static let dummyDataDelay = 1.0 // Seconds
+    // The response to get community details has details for all commununities in the graph before
+    // this means that the call only needs to be made once, so it is cached until we get new communities
+    static let cacheCommunityDetails = true // Default: true
+    static let cahceCommunityDetailsDelay = 1.0 // Seconds
     
     // MARK: - Server
     

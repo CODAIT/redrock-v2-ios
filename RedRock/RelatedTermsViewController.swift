@@ -59,6 +59,11 @@ class RelatedTermsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillAppear(animated: Bool) {
+        // Clearing community details cache because we will have a new community if we navigate back here
+        Network.sharedInstance.clearCommunityDetailsCache()
+    }
+    
     override func viewWillDisappear(animated: Bool) {
         wv?.onBlur()
     }
