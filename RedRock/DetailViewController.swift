@@ -54,24 +54,29 @@ class DetailViewController: UIViewController {
         self.rightView.addSubview((sentimentWV?.view)!)
         sentimentWV?.didMoveToParentViewController(self)
         
+        sentimentWV?.communityId = communityId!
+        
         // Make request
         
         // TODO: replace the line below with this line when changing the web views
-        // Network.sharedInstance.getCommunityDetails(searchTerms!) { (json, error) in
-        Network.sharedInstance.getSynonyms(searchTerms!) { (json, error) in
-            guard self.wordCloudWV != nil else {
-                log.warning("Network response can not find webview to display data")
-                return
-            }
+        Network.sharedInstance.getCommunityDetails(searchTerms!) { (json, error) in
+        //Network.sharedInstance.getSynonyms(searchTerms!) { (json, error) in
+            //guard self.wordCloudWV != nil else {
+            //    log.warning("Network response can not find webview to display data")
+            //    return
+            //}
             
-            self.wordCloudWV?.json = json
+            //self.wordCloudWV?.json = json
             
-            guard self.wordCloudWV != nil else {
+            guard self.sentimentWV != nil else {
                 log.warning("Network response can not find webview to display data")
                 return
             }
             
             self.sentimentWV?.json = json
+            
+            
+            
         }
     }
     

@@ -67,7 +67,7 @@ class VisMasterViewController: UIViewController {
         }
     }
     var searchText: String = ""
-    
+    var communityId: String?
     
     // MARK: - UI
     var visHolderView: UIView!
@@ -267,6 +267,7 @@ class VisMasterViewController: UIViewController {
                 let c: Int = Int(col)!
                 
                 tableData[r][c] = cellJson.stringValue.stringByReplacingOccurrencesOfString("\"", withString: "").stringByReplacingOccurrencesOfString("'", withString: "").stringByReplacingOccurrencesOfString("\n", withString: "") //remove quotes
+                                
             }
         }
 
