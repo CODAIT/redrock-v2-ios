@@ -91,6 +91,7 @@ class Network
         var parameters = Dictionary<String,String>()
         parameters["searchterms"] = searchText.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
         parameters["get3d"] = "false"
+        parameters["top"] = "20"
         let req = self.createRequest(Config.serverCommunities, paremeters: parameters)
         executeRequest(req, callback: callback)
     }
