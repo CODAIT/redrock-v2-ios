@@ -827,75 +827,49 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
     }
     
     func transformDataForWordCloud(){
-        func loadData() {
+        func loadData(data: JSON) {
             onLoadingState()
-            if self.chartData.count > 0
+            if data.count > 0
             {
                 let viewSize = self.viewSize
+                let communityWords = data[self.communityId!]
                 
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                if communityWords == nil {
+                    onNoDataState()
+                    return
+                }
+                
+                var script9 = "var myData = ["
                     
-                    let searchTermCount = self.json["searchTermCount"].floatValue
-                    let searchTerm = self.json["searchTerm"].stringValue
-                    var script9 = "var myData = '{\"nodes\": [ {\"name\":\"\(searchTerm)\",\"value\":\(searchTermCount),\"group\":1}, "
-                    for r in 0..<self.self.chartData.count{
-                        script9+="{\"name\": \""
-                        script9+=self.chartData[r][0]
-                        script9+="\", \"value\": "
-                        script9+=self.chartData[r][2]
-                        script9+=", \"group\": 2"
-                        script9+="}"
-                        if(r != (self.chartData.count-1)){
-                            script9+=","
-                        }
-                    }
-                    script9+="], \"links\": ["
-                    for r in 0..<self.chartData.count{
-                        script9+="{\"source\": 0"
-                        script9+=", \"target\": "
-                        script9+="\(r+1)"
-                        script9+=", \"distance\": "
-                        let myInteger = Int((self.chartData[r][1] as NSString).floatValue*10000)
-                        script9+="\(myInteger)"
-                        script9+="}"
-                        if(r != (self.chartData.count-1)){
-                            script9+=","
-                        }
-                    }
-                    script9+="]}'; var w = \(viewSize.width); var h = \(viewSize.height); renderChart(myData,w,h);"
-                    
-                    // For testing
-                    //                    script9 = "var myData='{\"nodes\":[    {\"name\":\"Myriel\",\"value\":52,\"group\":1},    {\"name\":\"Labarre\",\"value\":5,\"group\":2},    {\"name\":\"Valjean\",\"value\":17,\"group\":2},    {\"name\":\"Mme.deR\",\"value\":55,\"group\":2},    {\"name\":\"Mme.deR\",\"value\":17,\"group\":2},    {\"name\":\"Isabeau\",\"value\":44,\"group\":2},    {\"name\":\"Mme.deR\",\"value\":17,\"group\":2},    {\"name\":\"Isabeau\",\"value\":22,\"group\":2},    {\"name\":\"Isabeau\",\"value\":17,\"group\":2},    {\"name\":\"Gervais\",\"value\":33,\"group\":2}  ],  \"links\":[    {\"source\":0,\"target\":1,\"distance\":33},    {\"source\":0,\"target\":2,\"distance\":22},    {\"source\":0,\"target\":3,\"distance\":22},    {\"source\":0,\"target\":4,\"distance\":11},    {\"source\":0,\"target\":5,\"distance\":22},    {\"source\":0,\"target\":6,\"distance\":22},    {\"source\":0,\"target\":7,\"distance\":43},    {\"source\":0,\"target\":8,\"distance\":22},    {\"source\":0,\"target\":9,\"distance\":22}  ]}'; var w = \(viewSize.width); var h = \(viewSize.height); renderChart(myData,w,h);";
-                    
-                    
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        self.webView.evaluateJavaScript(script9, completionHandler: nil)
-                        self.onSuccessState()
-                    })
-                })
+                for i in 0..<communityWords.count {
+                    var word = communityWords[i];
+                    script9 += (i == 0) ? "" : ",";
+                    script9 += "{\"text\":\"\(word[0])\", \"size\":\"\(word[1])\"}"
+                }
+                
+                script9 += "];"
+                script9 += " var w = \(viewSize.width); var h = \(viewSize.height); renderChart(myData,w,h);"
+                
+                log.verbose(script9)
+                
+                self.webView.evaluateJavaScript(script9, completionHandler: nil)
+                self.onSuccessState()
                 
             }
             else {
                 onNoDataState()
             }
-            
         }
         
-        let numberOfColumns = 3        // number of columns
-        let containerName = "distance" // name of container for data
+        let comDetails = self.json["communitydetails"]
+        let comWords = comDetails["wordcloud"]
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-            let data = self.returnArrayOfData(numberOfColumns, containerName: containerName, json: self.json!)
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                if(data != nil){
-                    self.chartData = data!
-                    loadData()
-                }
-                else{
-                    self.errorDescription = Config.serverErrorMessage
-                }
-            })
-        })
+        if(comWords != nil){
+            loadData(comWords)
+        } else {
+            self.errorDescription = Config.serverErrorMessage
+        }
+        
     }
     
 }

@@ -46,6 +46,8 @@ class DetailViewController: UIViewController {
         self.leftView.addSubview((wordCloudWV?.view)!)
         wordCloudWV?.didMoveToParentViewController(self)
         
+        wordCloudWV?.communityId = communityId!
+        
         // Setup Vis
         sentimentWV = VisFactory.visualizationControllerForType(VisTypes.PieChart)!
         sentimentWV!.view.frame = CGRect(x: 0, y: 0, width: rightView.bounds.width, height: rightView.bounds.height)
@@ -61,12 +63,12 @@ class DetailViewController: UIViewController {
         // TODO: replace the line below with this line when changing the web views
         Network.sharedInstance.getCommunityDetails(searchTerms!) { (json, error) in
         //Network.sharedInstance.getSynonyms(searchTerms!) { (json, error) in
-            //guard self.wordCloudWV != nil else {
-            //    log.warning("Network response can not find webview to display data")
-            //    return
-            //}
+            guard self.wordCloudWV != nil else {
+                log.warning("Network response can not find webview to display data")
+                return
+            }
             
-            //self.wordCloudWV?.json = json
+            self.wordCloudWV?.json = json
             
             guard self.sentimentWV != nil else {
                 log.warning("Network response can not find webview to display data")
