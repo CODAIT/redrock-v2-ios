@@ -7,7 +7,6 @@
 </head>
 
 <body>
-  <p id="test"></p>
 </body>
 
 <script>
@@ -18,16 +17,15 @@ var wordColor=d3.scale.linear().domain([10,20,40,80]).range(["blue","green","ora
 
 function renderChart(couldData, w, h) {
 
-  var width = 440,
-      height = 400;
+  var width = w*2,
+      height = h*2;
 
   var viz = d3.select("body").append("svg")
   .attr("width", width)
   .attr("height", height)
   .attr("id", "svg");
 
-  d3.layout.cloud().size([400, 400])
-//      .words([{"text":"test","size":wordScale(.01)},{"text":"bad","size":wordScale(1)}])
+  d3.layout.cloud().size([width-50, height-50])
       .words(couldData)
       .rotate(function() { return ~~(Math.random() * 2) * 5; })
       .fontSize(function(d) { return wordScale(d.size); })
@@ -39,11 +37,11 @@ function renderChart(couldData, w, h) {
     var viz = d3.select("#svg");
 
     viz.append("g")
-      .attr("transform", "translate(200,220)")
+      .attr("transform", "translate("+width/2+","+height/2+")")
       .selectAll("text")
       .data(words)
       .enter().append("text")
-      .style("font-size", function(d) { return d.size + "px"; })
+      .style("font-size", function(d) { return d.size*3 + "px"; })
       .style("fill", function(d) { return wordColor(d.size); })
       .style("opacity", .75)
       .attr("text-anchor", "middle")
@@ -63,16 +61,14 @@ function renderChart(couldData, w, h) {
 
 }
 
-<!--
 data2 = [
   {"text": "access", "size": "1238"},
   {"text": "streets", "size": "333"},
   {"text": "people", "size": "333"},
   {"text": "world", "size": "333"},
-  {"text": "stuff", "size": "333"}
+  {"text": "stuff", "size": "4000"}
 ];
--->
 
-renderChart(data2);
+// renderChart(data2);
 
 </script>
