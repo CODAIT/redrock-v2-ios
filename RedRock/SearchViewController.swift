@@ -36,6 +36,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var searchButton: UIButton!
     @IBOutlet weak var leftTableView: UITableView!
     @IBOutlet weak var rightTableView: UITableView!
+    @IBOutlet weak var trendingLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +50,10 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
             self.handles = json!["handles"]
             self.leftTableView.reloadData()
             self.rightTableView.reloadData()
+            
+            if self.handles.count > 0 || self.handles.count > 0 {
+                self.trendingLabel.hidden = false
+            }
         }
     }
 

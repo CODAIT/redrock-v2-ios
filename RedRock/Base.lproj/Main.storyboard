@@ -126,7 +126,7 @@
                                     <outlet property="delegate" destination="Q1I-TA-SEc" id="QKt-qc-aed"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trending" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mDc-Pi-I2A">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trending" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mDc-Pi-I2A">
                                 <rect key="frame" x="249" y="327" width="102" height="29"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -166,6 +166,7 @@
                         <outlet property="rightTableView" destination="EdH-aU-jgH" id="QzG-wR-QAo"/>
                         <outlet property="searchButton" destination="bg3-dd-ROJ" id="GWX-jr-r2f"/>
                         <outlet property="searchField" destination="yYW-iv-Gql" id="1LH-a4-J00"/>
+                        <outlet property="trendingLabel" destination="mDc-Pi-I2A" id="pW6-tF-1Ae"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1TQ-Bu-Yev" userLabel="First Responder" sceneMemberID="firstResponder"/>
