@@ -106,6 +106,8 @@ class VisMasterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = Config.lightGreyColor
+        
         let formatStringV = "V:|-20-[visHolder]-20-|"
         let formatStringH = "H:|-20-[visHolder]-20-|"
         
