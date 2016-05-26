@@ -106,14 +106,17 @@ force
     .attr("stroke","rgba(0,0,0,0)")
     .attr("r", function(d){return radiusScale(d.value);})
     .attr("fill", function(d) {
-          if(d.name.charAt(0) == '#'){
-            return "#00B39F";
+          if(d.group == 1) {
+            return "#DEDED9";
+          }
+          else if(d.name.charAt(0) == '#'){
+            return "#679AC6";
           }
           else if(d.name.charAt(0) == '@'){
-            return "#325C80";
+            return "#172329";
           }
           else{
-            return "#edc01b";
+            return "#335570";
           }
         }
       )
