@@ -46,6 +46,8 @@ class Config {
     
     // MARK: - Colors
     static let darkBlueColor = UIColor(rgba: "#1C3648") // Dark Blue
+    static let lightGreyColor = UIColor(rgba: "#FBFBFB") // Light Grey
+    static let navBarColor = UIColor(rgba: "#EEF1F0") // NavBarColor
     
     // MARK: Vis settings
     static let noDataMessage = "No data available"

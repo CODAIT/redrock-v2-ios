@@ -184,7 +184,19 @@
                     <view key="view" contentMode="scaleToFill" id="c1E-Ab-eXj">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B9y-e8-au0">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="B9y-e8-au0" firstAttribute="leading" secondItem="c1E-Ab-eXj" secondAttribute="leading" id="2rd-CG-HeY"/>
+                            <constraint firstItem="B9y-e8-au0" firstAttribute="top" secondItem="3mN-se-UwK" secondAttribute="bottom" id="35N-YM-CDx"/>
+                            <constraint firstItem="JKe-Gm-Y77" firstAttribute="top" secondItem="B9y-e8-au0" secondAttribute="bottom" id="FeR-aR-hkz"/>
+                            <constraint firstAttribute="trailing" secondItem="B9y-e8-au0" secondAttribute="trailing" id="VI8-as-CSi"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Related Terms" id="CBL-Sa-1oS">
                         <barButtonItem key="rightBarButtonItem" style="plain" id="fTz-NU-5OS">
@@ -198,6 +210,9 @@
                             </button>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="visHolder" destination="B9y-e8-au0" id="Bkl-dg-PzW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VxY-IP-evG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -214,7 +229,19 @@
                     <view key="view" contentMode="scaleToFill" id="ntQ-p7-4J4">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b5E-ne-c0E">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="b5E-ne-c0E" firstAttribute="top" secondItem="4F4-1X-m7i" secondAttribute="bottom" id="LES-fg-mLC"/>
+                            <constraint firstItem="F2F-p9-RCj" firstAttribute="top" secondItem="b5E-ne-c0E" secondAttribute="bottom" id="OZ0-IA-Tsj"/>
+                            <constraint firstItem="b5E-ne-c0E" firstAttribute="leading" secondItem="ntQ-p7-4J4" secondAttribute="leading" id="ds1-Nc-4KJ"/>
+                            <constraint firstAttribute="trailing" secondItem="b5E-ne-c0E" secondAttribute="trailing" id="x2K-SH-GBl"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Communities" id="Gjm-DZ-s8t">
                         <barButtonItem key="rightBarButtonItem" style="plain" id="Upa-M3-0hj">
@@ -228,6 +255,9 @@
                             </button>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="visHolder" destination="b5E-ne-c0E" id="0zT-FZ-ce0"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9tF-M5-Hr2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

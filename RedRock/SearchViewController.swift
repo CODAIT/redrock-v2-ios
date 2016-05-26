@@ -41,6 +41,11 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController!.navigationBar.barTintColor = Config.navBarColor
+        self.navigationController!.navigationBar.tintColor = Config.darkBlueColor
+        self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : Config.darkBlueColor];
+        self.navigationController!.navigationBar.translucent = false;
+        
         Network.sharedInstance.getTopTerms { (json, error) in
             guard json != nil && error == nil else {
                 log.debug("getTopTerms error: \(error)")

@@ -41,6 +41,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             log.setup(.Severe, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
         #endif
         
+        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
+        
         /*
         NOTE: Copying Visualisations folder to '/tmp/www' to work around an issue with
         loading the files from the bundle. Without this workaround WKNetworkDelegate methods

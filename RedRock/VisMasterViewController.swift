@@ -36,6 +36,8 @@ enum VisTypes {
     case SidewaysBar
     case PieChart
     case WordCloud
+    case WordCount
+    case SentimentBar
 }
 
 @objc
@@ -69,10 +71,27 @@ class VisMasterViewController: UIViewController {
     var searchText: String = ""
     var communityId: String?
     
+    var titleText: String {
+        switch type! {
+        case .ForceGraph:
+            return "Similar"
+        case .CommunityGraph:
+            return "Community Clusters"
+        case .WordCount:
+            return "Community Commonly Used Terms"
+        case .SentimentBar:
+            return "Community Sentiment Analysis"
+        default:
+            return ""
+        }
+    }
+    
     // MARK: - UI
     var visHolderView: UIView!
+    var visHolderBackgroundView: UIView!
     var activityIndicator: UIActivityIndicatorView!
     var messageLabel: UILabel!
+    var titleLabel: UILabel!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -87,11 +106,35 @@ class VisMasterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        visHolderView = UIView(frame: view.bounds)
-        visHolderView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        let formatStringV = "V:|-20-[visHolder]-20-|"
+        let formatStringH = "H:|-20-[visHolder]-20-|"
+        
+        // Vis Background
+        visHolderBackgroundView = UIView()
+        visHolderBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        visHolderBackgroundView.backgroundColor = UIColor.whiteColor()
+        view.addSubview(visHolderBackgroundView)
+        
+        let backgroundViews = ["visHolder" : visHolderBackgroundView]
+        let bkConstraintsV =  NSLayoutConstraint.constraintsWithVisualFormat(formatStringV, options: [] , metrics: nil, views: backgroundViews)
+        NSLayoutConstraint.activateConstraints(bkConstraintsV)
+        
+        let bkConstraintsH =  NSLayoutConstraint.constraintsWithVisualFormat(formatStringH, options: [] , metrics: nil, views: backgroundViews)
+        NSLayoutConstraint.activateConstraints(bkConstraintsH)
+        
+        // Vis Holder
+        visHolderView = UIView() // UIView(frame: CGRect(x: 0, y: 0, width: 150, height: 150 ))
+        visHolderView.translatesAutoresizingMaskIntoConstraints = false
         visHolderView.backgroundColor = UIColor.clearColor()
         view.addSubview(visHolderView)
         visHolderView.hidden = true
+        
+        let views = ["visHolder" : visHolderView]
+        let constraintsV =  NSLayoutConstraint.constraintsWithVisualFormat(formatStringV, options: [] , metrics: nil, views: views)
+        NSLayoutConstraint.activateConstraints(constraintsV)
+
+        let constraintsH =  NSLayoutConstraint.constraintsWithVisualFormat(formatStringH, options: [] , metrics: nil, views: views)
+        NSLayoutConstraint.activateConstraints(constraintsH)
         
         //Loading View
         activityIndicator = createActivityIndicatorView()
@@ -102,6 +145,14 @@ class VisMasterViewController: UIViewController {
         messageLabel = createUILabelForError()
         view.addSubview(messageLabel)
         addConstrainsToCenterInView(messageLabel)
+        
+        //Title Label
+        titleLabel = UILabel(frame: CGRect(x: 20,y: 20,width: 50,height: 25))
+        titleLabel.text = self.titleText
+        titleLabel.font = UIFont(name: "HelveticaNeue-Thin", size: 16)
+        titleLabel.sizeToFit()
+        titleLabel.adjustsFontSizeToFitWidth = true
+        visHolderView.addSubview(titleLabel)
     }
     
     func onDataSet() {
@@ -134,6 +185,7 @@ class VisMasterViewController: UIViewController {
         activityIndicator.stopAnimating()
         activityIndicator.hidden = true
         messageLabel.hidden = true
+        visHolderView.bringSubviewToFront(titleLabel)
     }
     
     func onNoDataState() {

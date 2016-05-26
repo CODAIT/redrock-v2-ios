@@ -30,15 +30,17 @@ class RelatedTermsViewController: UIViewController {
     var searchTerm: String = "@ibm"
     var wv: VisMasterViewController?
     
+    @IBOutlet weak var visHolder: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Setup Vis
         wv = VisFactory.visualizationControllerForType(VisTypes.ForceGraph)
-        wv?.view.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
+        wv?.view.frame = CGRect(x: 0, y: 0, width: visHolder.bounds.width, height: visHolder.bounds.height)
         
         self.addChildViewController(wv!)
-        self.view.addSubview((wv?.view)!)
+        self.visHolder.addSubview((wv?.view)!)
         wv?.didMoveToParentViewController(self)
         
         wv?.searchText = searchTerm

@@ -58,13 +58,12 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
     var endDate: NSDate = NSDate()
     var highestValue : Double = 0.0
     
+    @IBOutlet weak var holderView: UIView!
+    
     var webView: WKWebView! = nil
     
     var viewSize: CGSize {
-        let statusSize = UIApplication.sharedApplication().statusBarFrame.size
-        let navSize = self.parentViewController?.navigationController?.navigationBar.frame.size
-        let viewSize = self.view.bounds.size
-        return CGSize.init(width: viewSize.width, height: viewSize.height - (navSize?.height)! - statusSize.height)
+        return webView.bounds.size
     }
     
     override func viewDidLoad() {
@@ -120,11 +119,8 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
         let config = WKWebViewConfiguration()
         config.userContentController = contentController
         
-        let myWebView = WKWebView(frame: self.view.bounds, configuration: config)
-        
-        myWebView.frame = self.view.bounds
+        let myWebView = WKWebView(frame: self.visHolderView.bounds, configuration: config)
         myWebView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        
         myWebView.navigationDelegate = self
         
         // don't let webviews scroll
