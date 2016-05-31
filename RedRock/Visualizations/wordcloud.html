@@ -11,11 +11,7 @@
 
 <script>
 
-
-var wordScale=d3.scale.linear().domain([1,100,1000,10000]).range([10,20,40,80]).clamp(true);
-var wordColor=d3.scale.linear().domain([10,20,40,80]).range(["blue","green","orange","red"]);
-
-function renderChart(couldData, w, h) {
+function renderChart(cloudData, w, h) {
 
   var width = w*2,
       height = h*2;
@@ -25,10 +21,17 @@ function renderChart(couldData, w, h) {
   .attr("height", height)
   .attr("id", "svg");
 
-  d3.layout.cloud().size([width-50, height-50])
-      .words(couldData)
-      .rotate(function() { return ~~(Math.random() * 2) * 5; })
-      .fontSize(function(d) { return wordScale(d.size); })
+  var wordScale = d3.scale.linear()
+    .domain([0, d3.max(cloudData, function(d) { return d.size; })])
+    .range([10,100]).clamp(true);
+
+  var fill = d3.scale.category20();
+
+  d3.layout.cloud().size([width, height])
+      .words(cloudData)
+      .rotate(0)
+      .fontSize(function(d) { return wordScale(+d.size); })
+      .text(function(d) { return d.text; })
       .on("end", draw)
       .start();
 
@@ -37,38 +40,19 @@ function renderChart(couldData, w, h) {
     var viz = d3.select("#svg");
 
     viz.append("g")
-      .attr("transform", "translate("+width/2+","+height/2+")")
+      .attr("transform", "translate(" + [width >> 1, height >> 1] + ")")
       .selectAll("text")
       .data(words)
       .enter().append("text")
-      .style("font-size", function(d) { return d.size*3 + "px"; })
-      .style("fill", function(d) { return wordColor(d.size); })
-      .style("opacity", .75)
+      .style("font-size", function(d) { return wordScale(d.size) + "px"; })
+      .style("fill", function(d, i) { return fill(i); })
       .attr("text-anchor", "middle")
       .attr("transform", function(d) {
         return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
       })
       .text(function(d) { return d.text; });
-
-		viz.append("text")
-      .data([couldData[0]])
-      .style("font-size", 20)
-      .style("font-weight", 900)
-      .attr("x", 100)
-      .attr("y", 20)
-      .text(function(d) { return ""})
   }
-
 }
 
-data2 = [
-  {"text": "access", "size": "1238"},
-  {"text": "streets", "size": "333"},
-  {"text": "people", "size": "333"},
-  {"text": "world", "size": "333"},
-  {"text": "stuff", "size": "4000"}
-];
-
-// renderChart(data2);
-
 </script>
+</html>

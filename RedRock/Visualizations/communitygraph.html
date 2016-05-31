@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
+<meta charset="utf-8" name="viewport" content="initial-scale=1.0" />
+
 <style>
 
 .node {
@@ -63,8 +64,8 @@ function returnColor(parentColor, number){
 
 function renderChart(data, w, h, minX, minY, maxX, maxY) {
     
-    var width = w,
-    height = h;
+    var width = w-16,
+    height = h-16;
     
     var force = d3.layout.force()
     .charge(-120)
@@ -87,11 +88,11 @@ function renderChart(data, w, h, minX, minY, maxX, maxY) {
 
 	var xScale = d3.scale.linear()
 		.domain([minX, maxX ])
-		.range([0, width]);
+		.range([5, width-5]);
 
 	var yScale = d3.scale.linear()
 		.domain([minY, maxY ])
-		.range([0, height]);
+		.range([5, height-5]);
 
 	var numberAfterFilter = 0;
 		
