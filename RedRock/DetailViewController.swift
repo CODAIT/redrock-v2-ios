@@ -39,7 +39,7 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         
         // Setup Vis
-        wordCloudWV = VisFactory.visualizationControllerForType(VisTypes.WordCloud)!
+        wordCloudWV = VisFactory.visualizationControllerForType(VisTypes.WordCount)!
         wordCloudWV!.view.frame = CGRect(x: 0, y: 0, width: leftView.bounds.width, height: leftView.bounds.height)
         
         self.addChildViewController(wordCloudWV!)

@@ -116,3 +116,12 @@ func copyFolderToTempFolder(filePath: String?) -> String?
     }
     return destPath
 }
+
+extension UIStoryboard {
+    class func mainStoryboard() -> UIStoryboard { return UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()) }
+    
+    class func wordCountViewController() -> VisWordCountViewController? {
+        return mainStoryboard().instantiateViewControllerWithIdentifier("VisWordCountViewController") as? VisWordCountViewController
+    }
+}
+
