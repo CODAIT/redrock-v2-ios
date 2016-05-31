@@ -99,6 +99,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell")
         
+        cell?.backgroundColor = UIColor.clearColor()
+        
         let label = cell?.viewWithTag(1) as! UILabel
         
         let list = listForTable(tableView)

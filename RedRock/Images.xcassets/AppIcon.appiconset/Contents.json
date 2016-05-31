@@ -3,13 +3,13 @@
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "RedRock2.0_Icon_29_Icon.png",
+      "filename" : "BlackRock_Icon_29_Icon.png",
       "scale" : "1x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "RedRock2.0_Icon_58_Icon-1.png",
+      "filename" : "BlackRock_Icon_58_Icon.png",
       "scale" : "2x"
     },
     {
@@ -20,7 +20,7 @@
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "RedRock2.0_Icon_80_Icon.png",
+      "filename" : "BlackRock_Icon_80_Icon.png",
       "scale" : "2x"
     },
     {
@@ -41,37 +41,37 @@
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "RedRock2.0_Icon_120_Icon.png",
+      "filename" : "BlackRock_Icon_120_Icon.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "RedRock2.0_Icon_180_Icon.png",
+      "filename" : "BlackRock_Icon_180_Icon.png",
       "scale" : "3x"
     },
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "RedRock2.0_Icon_29_Icon-1.png",
+      "filename" : "BlackRock_Icon_29_Icon-1.png",
       "scale" : "1x"
     },
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "RedRock2.0_Icon_58_Icon.png",
+      "filename" : "BlackRock_Icon_58_Icon-1.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "RedRock2.0_Icon_40_Icon.png",
+      "filename" : "BlackRock_Icon_40_Icon.png",
       "scale" : "1x"
     },
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "RedRock2.0_Icon_80_Icon-1.png",
+      "filename" : "BlackRock_Icon_80_Icon-1.png",
       "scale" : "2x"
     },
     {
@@ -87,25 +87,25 @@
     {
       "size" : "72x72",
       "idiom" : "ipad",
-      "filename" : "RedRock2.0_Icon_72_Icon.png",
+      "filename" : "BlackRock_Icon_72_Icon.png",
       "scale" : "1x"
     },
     {
       "size" : "72x72",
       "idiom" : "ipad",
-      "filename" : "RedRock2.0_Icon_ 144_Icon.png",
+      "filename" : "BlackRock_Icon_ 144_Icon.png",
       "scale" : "2x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "RedRock2.0_76_Icon.png",
+      "filename" : "BlackRock_Icon_76_Icon.png",
       "scale" : "1x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "RedRock2.0_Icon_152_Icon.png",
+      "filename" : "BlackRock_Icon_152_Icon.png",
       "scale" : "2x"
     },
     {
