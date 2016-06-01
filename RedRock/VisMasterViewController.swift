@@ -125,7 +125,7 @@ class VisMasterViewController: UIViewController {
         NSLayoutConstraint.activateConstraints(bkConstraintsH)
         
         // Vis Holder
-        visHolderView = UIView() // UIView(frame: CGRect(x: 0, y: 0, width: 150, height: 150 ))
+        visHolderView = UIView(frame: CGRect(x: 0, y: 0, width: 150, height: 150 ))
         visHolderView.translatesAutoresizingMaskIntoConstraints = false
         visHolderView.backgroundColor = UIColor.clearColor()
         view.addSubview(visHolderView)
