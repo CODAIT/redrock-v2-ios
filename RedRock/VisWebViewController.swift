@@ -101,6 +101,11 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
             switch name as! String {
             case "forcenode":
                 let term = dict.valueForKey("name") as! String
+                
+                if delegate != nil {
+                    delegate?.willReloadChart(term)
+                }
+                
                 Network.sharedInstance.getSynonyms(term) { (json, error) in
                     self.json = json
                 }

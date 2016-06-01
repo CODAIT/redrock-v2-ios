@@ -47,7 +47,13 @@ protocol VisLifeCycleProtocol {
     optional func onBlur()
 }
 
+protocol VisInteractionDelegate: class {
+    func willReloadChart(searchTerm: String)
+}
+
 class VisMasterViewController: UIViewController {
+    
+    weak var delegate: VisInteractionDelegate?
     
     var type: VisTypes!
     var json: JSON! {

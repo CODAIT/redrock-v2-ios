@@ -25,16 +25,21 @@
 
 import UIKit
 
-class RelatedTermsViewController: UIViewController {
+class RelatedTermsViewController: UIViewController, UITextFieldDelegate, VisInteractionDelegate {
 
     var searchTerm: String = "@ibm"
     var wv: VisMasterViewController?
     
+    @IBOutlet weak var searchHolder: UIView!
+    @IBOutlet weak var searchField: UITextField!
+    @IBOutlet weak var searchButton: UIButton!
     @IBOutlet weak var visHolder: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.searchField.text = searchTerm
+        
         // Setup Vis
         wv = VisFactory.visualizationControllerForType(VisTypes.ForceGraph)
         wv?.view.frame = CGRect(x: 0, y: 0, width: visHolder.bounds.width, height: visHolder.bounds.height)
@@ -43,9 +48,38 @@ class RelatedTermsViewController: UIViewController {
         self.visHolder.addSubview((wv?.view)!)
         wv?.didMoveToParentViewController(self)
         
+        wv?.delegate = self
         wv?.searchText = searchTerm
         
         // Make request
+        makeSearchRequest()
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        self.navigationController?.navigationBarHidden = false
+        
+        // Clearing community details cache because we will have a new community if we navigate back here
+        Network.sharedInstance.clearCommunityDetailsCache()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        wv?.onBlur()
+    }
+    
+    @IBAction func searchButtonClicked() {
+        if shouldSearch() {
+            wv?.onLoadingState()
+            makeSearchRequest()
+        }
+    }
+
+    func makeSearchRequest() {
         Network.sharedInstance.getSynonyms(searchTerm) { (json, error) in
             guard self.wv != nil else {
                 log.error("Network response can not find webview to display data")
@@ -55,21 +89,6 @@ class RelatedTermsViewController: UIViewController {
             self.wv?.json = json
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        // Clearing community details cache because we will have a new community if we navigate back here
-        Network.sharedInstance.clearCommunityDetailsCache()
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        wv?.onBlur()
-    }
-
     
     // MARK: - Navigation
 
@@ -83,5 +102,33 @@ class RelatedTermsViewController: UIViewController {
         searchTerms = searchTerm + "," + searchTerms
         (segue.destinationViewController as! CommunitiesViewController).searchTerms = searchTerms
     }
+    
+    // MARK: - UITextFieldDelegate
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        searchButtonClicked()
+        return true
+    }
 
+    // MARK: - VisInteractionDelegate
+    
+    func willReloadChart(searchTerm: String) {
+        self.searchField.text = searchTerm
+    }
+    
+    // MARK: - Utils
+    
+    func shouldSearch() -> Bool {
+        // Does not get called on table click, only on searchButton click and return
+        
+        searchTerm = Utils.cleanSearchText(self.searchField.text!)
+        
+        if searchTerm == "" {
+            Utils.shakeView(self.searchHolder)
+            
+            return false
+        }
+        
+        return true
+    }
 }

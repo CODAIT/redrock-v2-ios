@@ -67,6 +67,10 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBarHidden = true
+    }
+    
     
     // MARK: - Navigation
     
@@ -77,16 +81,10 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         // Does not get called on table click, only on searchButton click and return
         
-        searchTerm = cleanSearchText(self.searchField.text!)
+        searchTerm = Utils.cleanSearchText(self.searchField.text!)
         
         if searchTerm == "" {
-            let animation = CABasicAnimation(keyPath: "position")
-            animation.duration = 0.07
-            animation.repeatCount = 2
-            animation.autoreverses = true
-            animation.fromValue = NSValue(CGPoint: CGPointMake(self.searchField.center.x - 5, self.searchField.center.y))
-            animation.toValue = NSValue(CGPoint: CGPointMake(self.searchField.center.x + 5, self.searchField.center.y))
-            self.searchField.layer.addAnimation(animation, forKey: "position")
+            Utils.shakeView(self.searchField)
             
             return false
         }
@@ -138,8 +136,4 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         return tableView == rightTableView ? hashtags : handles
     }
     
-    func cleanSearchText(text: String) -> String {
-        let searchText = text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-        return searchText.stringByReplacingOccurrencesOfString(" ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-    }
 }
