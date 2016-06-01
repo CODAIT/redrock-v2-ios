@@ -78,9 +78,9 @@ class VisMasterViewController: UIViewController {
         case .CommunityGraph:
             return "Community Clusters"
         case .WordCount:
-            return "Community Commonly Used Terms"
+            return "Commonly Used Terms"
         case .SentimentBar:
-            return "Community Sentiment Analysis"
+            return "Sentiment Analysis"
         default:
             return ""
         }

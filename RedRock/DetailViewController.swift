@@ -49,7 +49,7 @@ class DetailViewController: UIViewController {
         wordCloudWV?.communityId = communityId!
         
         // Setup Vis
-        sentimentWV = VisFactory.visualizationControllerForType(VisTypes.PieChart)!
+        sentimentWV = VisFactory.visualizationControllerForType(VisTypes.SentimentBar)!
         sentimentWV!.view.frame = CGRect(x: 0, y: 0, width: rightView.bounds.width, height: rightView.bounds.height)
         
         self.addChildViewController(sentimentWV!)

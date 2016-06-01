@@ -123,5 +123,9 @@ extension UIStoryboard {
     class func wordCountViewController() -> VisWordCountViewController? {
         return mainStoryboard().instantiateViewControllerWithIdentifier("VisWordCountViewController") as? VisWordCountViewController
     }
+    
+    class func sentimentBarViewController() -> VisSentimentBarViewController? {
+        return mainStoryboard().instantiateViewControllerWithIdentifier("VisSentimentBarViewController") as? VisSentimentBarViewController
+    }
 }
 

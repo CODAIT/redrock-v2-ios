@@ -31,7 +31,7 @@ class VisFactory {
         case .TreeMap, .CirclePacking, .ForceGraph, .CommunityGraph, .StackedBar,
              .StackedBarDrilldownCirclePacking, .SidewaysBar, .PieChart, .WordCloud:
             return VisWebViewController(type: type)
-        case .WordCount:
+        case .WordCount, .SentimentBar:
             return VisNativeViewController(type: type)
         default:
             log.error("Tried to create unknown VisTyle: \(type)")

@@ -28,18 +28,29 @@ import SwiftyJSON
 class VisNativeViewController: VisMasterViewController, VisLifeCycleProtocol {
     
     var wordCountVC: VisWordCountViewController? = nil
+    var sentimentBarVC: VisSentimentBarViewController? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.clipsToBounds = true
         
-        wordCountVC = UIStoryboard.wordCountViewController()
-        
-        wordCountVC!.view.frame = CGRect(origin: CGPointZero, size: visHolderView.bounds.size)
-        self.visHolderView.addSubview(wordCountVC!.view)
-        addChildViewController(wordCountVC!)
-        wordCountVC?.didMoveToParentViewController(self)
+        switch type! {
+        case .WordCount:
+            wordCountVC = UIStoryboard.wordCountViewController()
+            wordCountVC!.view.frame = CGRect(origin: CGPointZero, size: visHolderView.bounds.size)
+            self.visHolderView.addSubview(wordCountVC!.view)
+            addChildViewController(wordCountVC!)
+            wordCountVC?.didMoveToParentViewController(self)
+        case .SentimentBar:
+            sentimentBarVC = UIStoryboard.sentimentBarViewController()
+            sentimentBarVC!.view.frame = CGRect(origin: CGPointZero, size: visHolderView.bounds.size)
+            self.visHolderView.addSubview(sentimentBarVC!.view)
+            addChildViewController(sentimentBarVC!)
+            sentimentBarVC?.didMoveToParentViewController(self)
+        default:
+            log.error("Unknown type: \(type)")
+        }
     }
     
     override func onDataSet() {
@@ -93,6 +104,20 @@ class VisNativeViewController: VisMasterViewController, VisLifeCycleProtocol {
     }
     
     func transformDataForSentimentBar() {
+        let communitydetails = json!["communitydetails"]
+        let sentiment = communitydetails["sentiment"]
+        let communitySentiment = sentiment[self.communityId!]
         
+        guard communitySentiment != nil else {
+            errorDescription = Config.noDataMessage
+            return
+        }
+        
+        guard sentimentBarVC != nil else {
+            log.verbose("sentimentBarVC is nil")
+            return
+        }
+        
+        sentimentBarVC?.sentiment = (positive: communitySentiment[0].intValue, negative: communitySentiment[1].intValue, neutral:communitySentiment[2].intValue)
     }
 }

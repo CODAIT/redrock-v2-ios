@@ -11,6 +11,7 @@
 		CE3124761CF7B239004C95B9 /* VisNativeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3124751CF7B239004C95B9 /* VisNativeViewController.swift */; };
 		CE3124781CF7BFD5004C95B9 /* VisWordCountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3124771CF7BFD5004C95B9 /* VisWordCountViewController.swift */; };
 		CE31247A1CFDFC0B004C95B9 /* VisWordCountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3124791CFDFC0B004C95B9 /* VisWordCountTableViewCell.swift */; };
+		CE31247C1CFF546D004C95B9 /* VisSentimentBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE31247B1CFF546D004C95B9 /* VisSentimentBarViewController.swift */; };
 		CE79DA4B1B1640C0003F01F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE79DA4A1B1640C0003F01F6 /* AppDelegate.swift */; };
 		CE79DA501B1640C0003F01F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE79DA4E1B1640C0003F01F6 /* Main.storyboard */; };
 		CE79DA521B1640C0003F01F6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE79DA511B1640C0003F01F6 /* Images.xcassets */; };
@@ -45,6 +46,7 @@
 		CE3124751CF7B239004C95B9 /* VisNativeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisNativeViewController.swift; sourceTree = "<group>"; };
 		CE3124771CF7BFD5004C95B9 /* VisWordCountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisWordCountViewController.swift; sourceTree = "<group>"; };
 		CE3124791CFDFC0B004C95B9 /* VisWordCountTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisWordCountTableViewCell.swift; sourceTree = "<group>"; };
+		CE31247B1CFF546D004C95B9 /* VisSentimentBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisSentimentBarViewController.swift; sourceTree = "<group>"; };
 		CE79DA451B1640C0003F01F6 /* RedRock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RedRock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE79DA491B1640C0003F01F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE79DA4A1B1640C0003F01F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 				CE3124751CF7B239004C95B9 /* VisNativeViewController.swift */,
 				CE3124771CF7BFD5004C95B9 /* VisWordCountViewController.swift */,
 				CE3124791CFDFC0B004C95B9 /* VisWordCountTableViewCell.swift */,
+				CE31247B1CFF546D004C95B9 /* VisSentimentBarViewController.swift */,
 				CE8BE36A1BCDA2120000E95C /* VisFactory.swift */,
 				41CC75D61B22068600383F13 /* Network.swift */,
 				CE79DA791B18B9BA003F01F6 /* Config.swift */,
@@ -296,6 +299,7 @@
 				41CC75D71B22068600383F13 /* Network.swift in Sources */,
 				CEE5C0E61CD7F5B600200EED /* SearchViewController.swift in Sources */,
 				CE3124781CF7BFD5004C95B9 /* VisWordCountViewController.swift in Sources */,
+				CE31247C1CFF546D004C95B9 /* VisSentimentBarViewController.swift in Sources */,
 				CEE5C0E81CD7F5F600200EED /* RelatedTermsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
