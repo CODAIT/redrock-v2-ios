@@ -84,6 +84,11 @@ class VisNativeViewController: VisMasterViewController, VisLifeCycleProtocol {
             return
         }
         
+        guard wordCountVC != nil else {
+            log.verbose("wordCountVC is nil")
+            return
+        }
+        
         wordCountVC?.words = words
     }
     

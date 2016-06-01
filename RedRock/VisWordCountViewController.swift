@@ -16,6 +16,12 @@ class VisWordCountViewController: UIViewController, UITableViewDataSource {
     var words = JSON([]) {
         didSet {
             largestElement = words.first
+            
+            guard tableView != nil else {
+                log.verbose("tableView is nil")
+                return
+            }
+            
             tableView.reloadData()
         }
     }
