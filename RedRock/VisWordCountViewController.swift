@@ -29,6 +29,8 @@ import SwiftyJSON
 class VisWordCountViewController: UIViewController, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var tableViewHolderView: UIView!
     
     var words = JSON([]) {
         didSet {
@@ -40,6 +42,7 @@ class VisWordCountViewController: UIViewController, UITableViewDataSource {
             }
             
             tableView.reloadData()
+            layoutTableView()
         }
     }
     var largestElement: (String, JSON)?
@@ -70,6 +73,17 @@ class VisWordCountViewController: UIViewController, UITableViewDataSource {
         cell.barPostion = count / largestCount!
         
         return cell
+    }
+    
+    func layoutTableView() {
+        let contentSize = tableView.contentSize
+        let holderHeight = tableViewHolderView.bounds.height
+        
+        if contentSize.height < holderHeight {
+            tableViewHeight.constant = contentSize.height
+        } else {
+            tableViewHeight.constant = holderHeight
+        }
     }
 
     /*
