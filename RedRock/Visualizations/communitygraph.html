@@ -108,7 +108,7 @@ function renderChart(data, w, h, minX, minY, maxX, maxY) {
 		numberAfterFilter = numberAfterFilter + 1;
 		return yScale(d.y);
 	})
-	.attr("r", 5)
+	.attr("r", 3)
 	.style("fill", function(d) {
 		return returnColor(parentColor(d.community),2);
     }).on("click", function(d) {
