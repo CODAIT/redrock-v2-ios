@@ -68,6 +68,8 @@ class VisSentimentBarViewController: UIViewController {
         let negativeRatio = neg / total
         let neutralRatio = neut / total
         
+        log.verbose("Sentiment - pos: \(pos) neg: \(neg) neut: \(neut)")
+        
         // Set label text
         neutralPercentLabel.text = String(format: "%.0f %%", round(neutralRatio * 100))
         negativePercentLabel.text = String(format: "%.0f %%", round(negativeRatio * 100))
