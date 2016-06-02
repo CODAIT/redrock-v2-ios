@@ -432,14 +432,12 @@
                                                             <rect key="frame" x="148" y="8" width="228" height="28"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cIE-2D-X5k">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="228" height="28"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="114" height="28"/>
                                                                     <color key="backgroundColor" red="0.25882352941176467" green="0.43529411764705883" blue="0.6588235294117647" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="width" constant="228" id="cw5-HF-noh"/>
-                                                                    </constraints>
                                                                 </view>
                                                             </subviews>
                                                             <constraints>
+                                                                <constraint firstItem="cIE-2D-X5k" firstAttribute="width" secondItem="ufd-3T-HAg" secondAttribute="width" multiplier="0.5" id="Cce-2Y-WOP"/>
                                                                 <constraint firstItem="cIE-2D-X5k" firstAttribute="leading" secondItem="ufd-3T-HAg" secondAttribute="leading" id="Tc8-jZ-gge"/>
                                                                 <constraint firstItem="cIE-2D-X5k" firstAttribute="top" secondItem="ufd-3T-HAg" secondAttribute="top" id="ThN-U5-xea"/>
                                                                 <constraint firstAttribute="bottom" secondItem="cIE-2D-X5k" secondAttribute="bottom" id="ebq-uF-67J"/>
@@ -468,7 +466,7 @@
                                                 <connections>
                                                     <outlet property="bar" destination="cIE-2D-X5k" id="5hb-Gl-ldq"/>
                                                     <outlet property="barHolder" destination="ufd-3T-HAg" id="Xfp-RL-0Zo"/>
-                                                    <outlet property="barWidth" destination="cw5-HF-noh" id="DU5-Ku-ROe"/>
+                                                    <outlet property="barWidth" destination="Cce-2Y-WOP" id="MAR-xY-P9w"/>
                                                     <outlet property="titleLabel" destination="dfG-SP-6Y3" id="ep4-Qc-bUT"/>
                                                 </connections>
                                             </tableViewCell>

@@ -42,4 +42,19 @@ class Utils {
         animation.toValue = NSValue(CGPoint: CGPointMake(view.center.x + 5, view.center.y))
         view.layer.addAnimation(animation, forKey: "position")
     }
+    
+    static func changeMultiplier(constraint: NSLayoutConstraint, multiplier: CGFloat) -> NSLayoutConstraint {
+        let newConstraint = NSLayoutConstraint(
+            item: constraint.firstItem,
+            attribute: constraint.firstAttribute,
+            relatedBy: constraint.relation,
+            toItem: constraint.secondItem,
+            attribute: constraint.secondAttribute,
+            multiplier: multiplier,
+            constant: constraint.constant)
+        
+        newConstraint.priority = constraint.priority
+        
+        return newConstraint
+    }
 }

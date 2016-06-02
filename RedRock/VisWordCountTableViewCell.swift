@@ -41,7 +41,6 @@ class VisWordCountTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        updateBar()
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -51,8 +50,10 @@ class VisWordCountTableViewCell: UITableViewCell {
     }
 
     func updateBar() {
-        let width = barHolder.bounds.width * CGFloat(barPostion)
-        barWidth.constant = width
+        let const = Utils.changeMultiplier(barWidth, multiplier: CGFloat(barPostion))
+        barHolder.removeConstraint(barWidth)
+        barHolder.addConstraint(const)
+        barWidth = const
     }
     
 }
