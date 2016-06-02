@@ -50,8 +50,8 @@ d3.select("svg").remove(); //clear the chart before starting
 
 var resizeConstant = 1.43
 
-var width = w * resizeConstant,
-height = h * resizeConstant;
+var width = w * resizeConstant - 16,
+height = h * resizeConstant - 16;
 
 var color = d3.scale.category20();
 
