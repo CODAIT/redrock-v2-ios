@@ -125,10 +125,12 @@ force
        })
 
     node.append("text")
-    .attr("x", function(d){return 4+radiusScale(d.value);})
+    .attr("y", function(d){return 16+radiusScale(d.value);})
     .attr("dy", ".35em")
     .attr("fill", "black")
     .attr("font-family", "Helvetica")
+    .style("font-size", "20px")
+    .style("text-anchor", "middle")
     .text(function(d) {return d.name;});
 
 
@@ -140,7 +142,7 @@ force
         .attr("y2", function(d) { return Math.max(0,Math.min(height,d.target.y)); });
 
         // bound the nodes according to their radius and the screen bounds
-        node.attr("transform", function(d) { return "translate(" + Math.max(0+radiusScale(d.value),Math.min(width-70-radiusScale(d.value),d.x)) + "," + Math.max(0+radiusScale(d.value),Math.min(height-radiusScale(d.value),d.y)) + ")"; });
+        node.attr("transform", function(d) { return "translate(" + Math.max(0+radiusScale(d.value),Math.min(width-radiusScale(d.value),d.x)) + "," + Math.max(0+radiusScale(d.value),Math.min(height-30-radiusScale(d.value),d.y)) + ")"; });
   });
 
 };
