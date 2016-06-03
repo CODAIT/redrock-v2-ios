@@ -51,13 +51,13 @@
 		CE31247B1CFF546D004C95B9 /* VisSentimentBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisSentimentBarViewController.swift; sourceTree = "<group>"; };
 		CE31247D1CFF89FB004C95B9 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		CE31247F1D00D504004C95B9 /* SearchField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
-		CE79DA451B1640C0003F01F6 /* RedRock3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RedRock3.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE79DA451B1640C0003F01F6 /* RedRock2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RedRock2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE79DA491B1640C0003F01F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE79DA4A1B1640C0003F01F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE79DA4F1B1640C0003F01F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CE79DA511B1640C0003F01F6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		CE79DA541B1640C0003F01F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		CE79DA5A1B1640C0003F01F6 /* RedRock3.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RedRock3.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE79DA5A1B1640C0003F01F6 /* RedRock2.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RedRock2.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE79DA5F1B1640C0003F01F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE79DA601B1640C0003F01F6 /* RedRockTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedRockTests.swift; sourceTree = "<group>"; };
 		CE79DA791B18B9BA003F01F6 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
@@ -110,8 +110,8 @@
 		CE79DA461B1640C0003F01F6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CE79DA451B1640C0003F01F6 /* RedRock3.app */,
-				CE79DA5A1B1640C0003F01F6 /* RedRock3.xctest */,
+				CE79DA451B1640C0003F01F6 /* RedRock2.app */,
+				CE79DA5A1B1640C0003F01F6 /* RedRock2.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -172,9 +172,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		CE79DA441B1640C0003F01F6 /* RedRock3 */ = {
+		CE79DA441B1640C0003F01F6 /* RedRock2 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CE79DA641B1640C0003F01F6 /* Build configuration list for PBXNativeTarget "RedRock3" */;
+			buildConfigurationList = CE79DA641B1640C0003F01F6 /* Build configuration list for PBXNativeTarget "RedRock2" */;
 			buildPhases = (
 				CE79DA411B1640C0003F01F6 /* Sources */,
 				CE79DA421B1640C0003F01F6 /* Frameworks */,
@@ -185,14 +185,14 @@
 			);
 			dependencies = (
 			);
-			name = RedRock3;
+			name = RedRock2;
 			productName = RedRock;
-			productReference = CE79DA451B1640C0003F01F6 /* RedRock3.app */;
+			productReference = CE79DA451B1640C0003F01F6 /* RedRock2.app */;
 			productType = "com.apple.product-type.application";
 		};
-		CE79DA591B1640C0003F01F6 /* RedRock3Tests */ = {
+		CE79DA591B1640C0003F01F6 /* RedRock2Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CE79DA671B1640C0003F01F6 /* Build configuration list for PBXNativeTarget "RedRock3Tests" */;
+			buildConfigurationList = CE79DA671B1640C0003F01F6 /* Build configuration list for PBXNativeTarget "RedRock2Tests" */;
 			buildPhases = (
 				CE79DA561B1640C0003F01F6 /* Sources */,
 				CE79DA571B1640C0003F01F6 /* Frameworks */,
@@ -203,9 +203,9 @@
 			dependencies = (
 				CE79DA5C1B1640C0003F01F6 /* PBXTargetDependency */,
 			);
-			name = RedRock3Tests;
+			name = RedRock2Tests;
 			productName = RedRockTests;
-			productReference = CE79DA5A1B1640C0003F01F6 /* RedRock3.xctest */;
+			productReference = CE79DA5A1B1640C0003F01F6 /* RedRock2.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -229,7 +229,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CE79DA401B1640C0003F01F6 /* Build configuration list for PBXProject "RedRock3" */;
+			buildConfigurationList = CE79DA401B1640C0003F01F6 /* Build configuration list for PBXProject "RedRock2" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -242,8 +242,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CE79DA441B1640C0003F01F6 /* RedRock3 */,
-				CE79DA591B1640C0003F01F6 /* RedRock3Tests */,
+				CE79DA441B1640C0003F01F6 /* RedRock2 */,
+				CE79DA591B1640C0003F01F6 /* RedRock2Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -325,7 +325,7 @@
 /* Begin PBXTargetDependency section */
 		CE79DA5C1B1640C0003F01F6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = CE79DA441B1640C0003F01F6 /* RedRock3 */;
+			target = CE79DA441B1640C0003F01F6 /* RedRock2 */;
 			targetProxy = CE79DA5B1B1640C0003F01F6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -446,8 +446,8 @@
 				INFOPLIST_FILE = RedRock/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "-D DEBUGLOG";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ibm.cio.be.ipad.alterj.RedRock3;
-				PRODUCT_NAME = RedRock3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ibm.cio.be.ipad.alterj.RedRock2;
+				PRODUCT_NAME = RedRock2;
 				PROVISIONING_PROFILE = "960432f8-dca8-45cb-b9c6-e7754f2c87b5";
 			};
 			name = Debug;
@@ -456,7 +456,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -464,8 +464,8 @@
 				);
 				INFOPLIST_FILE = RedRock/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ibm.cio.be.ipad.alterj.RedRock3;
-				PRODUCT_NAME = RedRock3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ibm.cio.be.ipad.alterj.RedRock2;
+				PRODUCT_NAME = RedRock2;
 				PROVISIONING_PROFILE = "6a171cbf-0f3a-44f7-9724-9536ab2cff8b";
 			};
 			name = Release;
@@ -484,8 +484,8 @@
 				);
 				INFOPLIST_FILE = RedRockTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = RedRock3;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RedRock3.app/RedRock3";
+				PRODUCT_NAME = RedRock2;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RedRock2.app/RedRock2";
 			};
 			name = Debug;
 		};
@@ -499,15 +499,15 @@
 				);
 				INFOPLIST_FILE = RedRockTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = RedRock3;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RedRock3.app/RedRock3";
+				PRODUCT_NAME = RedRock2;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RedRock2.app/RedRock2";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CE79DA401B1640C0003F01F6 /* Build configuration list for PBXProject "RedRock3" */ = {
+		CE79DA401B1640C0003F01F6 /* Build configuration list for PBXProject "RedRock2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CE79DA621B1640C0003F01F6 /* Debug */,
@@ -516,7 +516,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CE79DA641B1640C0003F01F6 /* Build configuration list for PBXNativeTarget "RedRock3" */ = {
+		CE79DA641B1640C0003F01F6 /* Build configuration list for PBXNativeTarget "RedRock2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CE79DA651B1640C0003F01F6 /* Debug */,
@@ -525,7 +525,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CE79DA671B1640C0003F01F6 /* Build configuration list for PBXNativeTarget "RedRock3Tests" */ = {
+		CE79DA671B1640C0003F01F6 /* Build configuration list for PBXNativeTarget "RedRock2Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CE79DA681B1640C0003F01F6 /* Debug */,
