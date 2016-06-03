@@ -1,4 +1,4 @@
-# RedRock v3 iOS
+# RedRock v2 iOS App
 
 This project is an iPad app to search twitter data for terms and display analysis of the results.
 
