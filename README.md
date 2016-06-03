@@ -1,8 +1,8 @@
-# RedRock-iOS
+# RedRock v2 iOS
 
 This project is an iPad app to search twitter data for terms and display analysis of the results.
 
-Backend: [https://github.com/SparkTC/redrock](https://github.com/SparkTC/redrock)
+Backend: [https://github.com/SparkTC/tiara](https://github.com/SparkTC/tiara)
 
 #### Getting started
 
