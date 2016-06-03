@@ -140,10 +140,10 @@ force
 
   force.on("tick", function() {
     // bound the links according to their radius and the screen bounds
-    link.attr("x1", function(d) { return Math.max(0,Math.min(width,d.source.x)); })
-        .attr("y1", function(d) { return Math.max(0,Math.min(height,d.source.y)); })
-        .attr("x2", function(d) { return Math.max(0,Math.min(width,d.target.x)); })
-        .attr("y2", function(d) { return Math.max(0,Math.min(height,d.target.y)); });
+    link.attr("x1", function(d) { return Math.max(0+radiusScale(d.source.value),Math.min(width-radiusScale(d.source.value),d.source.x)); })
+        .attr("y1", function(d) { return Math.max(0+radiusScale(d.source.value),Math.min(height-30-radiusScale(d.source.value),d.source.y)); })
+        .attr("x2", function(d) { return Math.max(0+radiusScale(d.target.value),Math.min(width-radiusScale(d.target.value),d.target.x)); })
+        .attr("y2", function(d) { return Math.max(0+radiusScale(d.target.value),Math.min(height-30-radiusScale(d.target.value),d.target.y)); });
 
         // bound the nodes according to their radius and the screen bounds
         node.attr("transform", function(d) { return "translate(" + Math.max(0+radiusScale(d.value),Math.min(width-radiusScale(d.value),d.x)) + "," + Math.max(0+radiusScale(d.value),Math.min(height-30-radiusScale(d.value),d.y)) + ")"; });
