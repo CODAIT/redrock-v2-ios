@@ -10,7 +10,7 @@
         <!--Search-->
         <scene sceneID="USV-es-ewE">
             <objects>
-                <viewController id="Q1I-TA-SEc" customClass="SearchViewController" customModule="RedRock3" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Q1I-TA-SEc" customClass="SearchViewController" customModule="RedRock2" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="h9W-S9-jHO"/>
                         <viewControllerLayoutGuide type="bottom" id="NEk-eE-VnU"/>
@@ -25,7 +25,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ms5-yp-zYC" userLabel="Search field and button holder">
                                 <rect key="frame" x="90" y="214" width="420" height="60"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Example: #spark" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yYW-iv-Gql" customClass="SearchField" customModule="RedRock3" customModuleProvider="target">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Example: #spark" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yYW-iv-Gql" customClass="SearchField" customModule="RedRock2" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="242" height="60"/>
                                         <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87450980389999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -185,7 +185,7 @@
         <!--Related Terms-->
         <scene sceneID="Mpd-Ql-6Yd">
             <objects>
-                <viewController id="YlB-QZ-f2c" customClass="RelatedTermsViewController" customModule="RedRock3" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="YlB-QZ-f2c" customClass="RelatedTermsViewController" customModule="RedRock2" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3mN-se-UwK"/>
                         <viewControllerLayoutGuide type="bottom" id="JKe-Gm-Y77"/>
@@ -305,7 +305,7 @@
         <!--Communities-->
         <scene sceneID="LoR-J2-OMN">
             <objects>
-                <viewController id="Nul-CZ-Ek0" customClass="CommunitiesViewController" customModule="RedRock3" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Nul-CZ-Ek0" customClass="CommunitiesViewController" customModule="RedRock2" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4F4-1X-m7i"/>
                         <viewControllerLayoutGuide type="bottom" id="F2F-p9-RCj"/>
@@ -350,7 +350,7 @@
         <!--Community Details-->
         <scene sceneID="JcO-2k-aqn">
             <objects>
-                <viewController id="y3F-dk-ilK" customClass="DetailViewController" customModule="RedRock3" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="y3F-dk-ilK" customClass="DetailViewController" customModule="RedRock2" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Zx9-jm-ojX"/>
                         <viewControllerLayoutGuide type="bottom" id="OIa-f4-yGp"/>
@@ -393,7 +393,7 @@
         <!--Vis Word Count View Controller-->
         <scene sceneID="U7e-Js-8aa">
             <objects>
-                <viewController storyboardIdentifier="VisWordCountViewController" id="Gph-st-A2b" customClass="VisWordCountViewController" customModule="RedRock3" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VisWordCountViewController" id="Gph-st-A2b" customClass="VisWordCountViewController" customModule="RedRock2" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="tbm-gJ-iXa"/>
                         <viewControllerLayoutGuide type="bottom" id="pTz-kH-bPZ"/>
@@ -412,7 +412,7 @@
                                             <constraint firstAttribute="height" constant="200" id="e14-Ts-QLj"/>
                                         </constraints>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="dfL-Wl-wXd" customClass="VisWordCountTableViewCell" customModule="RedRock3" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="dfL-Wl-wXd" customClass="VisWordCountTableViewCell" customModule="RedRock2" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="400" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dfL-Wl-wXd" id="E12-Ws-uE7">
@@ -527,7 +527,7 @@
         <!--Vis Sentiment Bar View Controller-->
         <scene sceneID="iCJ-aP-AZ0">
             <objects>
-                <viewController storyboardIdentifier="VisSentimentBarViewController" id="vWK-Sf-Y13" customClass="VisSentimentBarViewController" customModule="RedRock3" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VisSentimentBarViewController" id="vWK-Sf-Y13" customClass="VisSentimentBarViewController" customModule="RedRock2" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5jy-dJ-2Od"/>
                         <viewControllerLayoutGuide type="bottom" id="Pfl-Gl-x8L"/>
