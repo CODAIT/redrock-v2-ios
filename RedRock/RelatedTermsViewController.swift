@@ -74,6 +74,7 @@ class RelatedTermsViewController: UIViewController, UITextFieldDelegate, VisInte
     
     @IBAction func searchButtonClicked() {
         if shouldSearch() {
+            searchField.resignFirstResponder()
             wv?.onLoadingState()
             makeSearchRequest()
         }
