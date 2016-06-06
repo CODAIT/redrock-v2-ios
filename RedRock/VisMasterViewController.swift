@@ -92,6 +92,21 @@ class VisMasterViewController: UIViewController {
         }
     }
     
+    var loadingLabelText: String {
+        switch type! {
+        case .ForceGraph:
+            return "Finding Related Terms"
+        case .CommunityGraph:
+            return "Discovering Communities"
+        case .WordCount:
+            return "Reading all the Tweets"
+        case .SentimentBar:
+            return "Surveying Tweeters"
+        default:
+            return ""
+        }
+    }
+    
     // MARK: - UI
     var visHolderView: UIView!
     var visHolderBackgroundView: UIView!
@@ -250,6 +265,20 @@ class VisMasterViewController: UIViewController {
         activityIndicator.color = Config.darkBlueColor
         activityIndicator.startAnimating()
         activityIndicator.hidden = false
+        
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 44))
+        label.text = self.loadingLabelText
+        label.textAlignment = .Center
+        activityIndicator.addSubview(label)
+        
+        let views = [
+            "label": label
+        ]
+        label.translatesAutoresizingMaskIntoConstraints = false
+        let viewConst_W = NSLayoutConstraint.constraintsWithVisualFormat("H:|[label]|", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: views)
+        let viewConst_H = NSLayoutConstraint.constraintsWithVisualFormat("V:|-100-[label]|", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: views)
+        activityIndicator.addConstraints(viewConst_W)
+        activityIndicator.addConstraints(viewConst_H)
         
         return activityIndicator
     }
