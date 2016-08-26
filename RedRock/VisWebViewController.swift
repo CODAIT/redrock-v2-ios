@@ -640,7 +640,7 @@ class VisWebViewController: VisMasterViewController, VisLifeCycleProtocol, WKNav
                         script9+=", \"target\": "
                         script9+="\(r+1)"
                         script9+=", \"distance\": "
-                        let myInteger = Int((self.chartData[r][1] as NSString).floatValue*10000)
+                        let myInteger = Double((self.chartData[r][1] as NSString).floatValue*10000)
                         script9+="\(myInteger)"
                         script9+="}"
                         if(r != (self.chartData.count-1)){
