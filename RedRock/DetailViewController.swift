@@ -59,10 +59,7 @@ class DetailViewController: UIViewController {
         sentimentWV?.communityId = communityId!
         
         // Make request
-        
-        // TODO: replace the line below with this line when changing the web views
         Network.sharedInstance.getCommunityDetails(searchTerms!) { (json, error) in
-        //Network.sharedInstance.getSynonyms(searchTerms!) { (json, error) in
             guard self.wordCloudWV != nil else {
                 log.warning("Network response can not find webview to display data")
                 return

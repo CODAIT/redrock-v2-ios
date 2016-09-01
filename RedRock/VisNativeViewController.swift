@@ -3,10 +3,11 @@
 //  RedRock
 //
 //  Created by Jonathan Alter on 5/26/2016.
+//  Copyright © 2016 IBM. All rights reserved.
 //
 
 /**
- * (C) Copyright IBM Corp. 2015, 2015
+ * (C) Copyright IBM Corp. 2016, 2016
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
