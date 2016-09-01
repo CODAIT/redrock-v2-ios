@@ -1,6 +1,6 @@
 //
 //  SearchField.swift
-//  RedRock3
+//  RedRock
 //
 //  Created by Jonathan Alter on 6/2/16.
 //  Copyright © 2016 IBM. All rights reserved.

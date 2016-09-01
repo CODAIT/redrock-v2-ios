@@ -38,8 +38,7 @@ class Config {
     
     // MARK: - Server
     
-//    static let serverAddress = "http://localhost:16666" // Localhost
-    static let serverAddress = "http://spark11:16666" // spark11
+    static let serverAddress = "http://localhost:16666" // Localhost
     static let serverSynonyms = "tiara/getsynonyms"
     static let serverTopTerms = "tiara/gettopterms"
     static let serverCommunities = "tiara/getcommunities"

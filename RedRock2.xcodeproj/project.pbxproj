@@ -448,7 +448,7 @@
 				OTHER_SWIFT_FLAGS = "-D DEBUGLOG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ibm.cio.be.ipad.alterj.RedRock2;
 				PRODUCT_NAME = RedRock2;
-				PROVISIONING_PROFILE = "960432f8-dca8-45cb-b9c6-e7754f2c87b5";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -466,7 +466,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ibm.cio.be.ipad.alterj.RedRock2;
 				PRODUCT_NAME = RedRock2;
-				PROVISIONING_PROFILE = "6a171cbf-0f3a-44f7-9724-9536ab2cff8b";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
