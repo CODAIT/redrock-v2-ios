@@ -2,7 +2,7 @@
 
 This project is an iPad app to search twitter data for terms and display analysis of the results.
 
-Backend: [https://github.com/SparkTC/tiara](https://github.com/SparkTC/tiara)
+Backend: [https://github.com/SparkTC/redrock-v2](https://github.com/SparkTC/redrock-v2)
 
 #### Getting started
 
